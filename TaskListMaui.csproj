@@ -63,9 +63,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Source\Screens\Login\" />
-	  <Folder Include="Source\Screens\User\" />
-	  <Folder Include="Source\Screens\Task\" />
+	  <Folder Include="Source\Main\DTOs\UserDTOs\" />
+	  <Folder Include="Source\Main\Entities\" />
+	  <Folder Include="Source\Main\Screens\Login\" />
+	  <Folder Include="Source\Main\Screens\User\" />
+	  <Folder Include="Source\Main\Screens\Task\" />
 	</ItemGroup>
 
 </Project>
