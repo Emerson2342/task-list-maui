@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskListMaui.Source.Main.ValueObjects
+namespace TaskListMaui.Source.Domain.Main.UseCase.ResponseCase
 {
-    public class Password
+    public class Response : Shared.UseCases.Response
     {
-        public string PassWord { get; set; } = string.Empty;
     }
 }

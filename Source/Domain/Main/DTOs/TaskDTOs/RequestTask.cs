@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace TaskListMaui.Source.Main.DTOs.TaskDTOs
+namespace TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs
 {
     public class RequestTask
     {

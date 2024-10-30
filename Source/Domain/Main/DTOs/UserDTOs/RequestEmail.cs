@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskListMaui.Source.Main.DTOs.UserDTOs
+namespace TaskListMaui.Source.Domain.Main.DTOs.UserDTOs
 {
     public class RequestEmail
     {

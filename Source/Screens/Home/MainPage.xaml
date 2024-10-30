@@ -1,12 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TaskListMaui.MainPage">
+             x:Class="TaskListMaui.Source.Screens.Home.MainPage"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <Grid>
-            
+        <Grid Padding="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout VerticalOptions="End" BackgroundColor="Aquamarine" Grid.Row="0">
+                <Label HorizontalOptions="Center" FontAttributes="Bold" Text="Seja Bem Vindo!"/>
+                <Label HorizontalOptions="Center" FontAttributes="Bold" Text="Lista de Tarefas"/>
+                <Image WidthRequest="250" Source="home.jpg"/>
+            </StackLayout>
+
+            <StackLayout BackgroundColor="#fff" Grid.Row="1">
+                <StackLayout Padding="5">
+                    <Button                       
+                        x:Name="Entrar"
+                        Text="Entrar"
+                        WidthRequest="150"
+                        />
+                </StackLayout>
+
+                <StackLayout Padding="5">
+                    <Button
+                        x:Name="Cadastrar"
+                        Text="Cadastrar"
+                        WidthRequest="150"
+                        />
+                </StackLayout>
+                <StackLayout Padding="5" HorizontalOptions="Center">
+                    <Label Text="Clique aqui" 
+       HorizontalOptions="Center" 
+       VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="HandlerPassword" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+
+            </StackLayout>
+
+
+
+
         </Grid>
+
+
+
     </ScrollView>
 
 </ContentPage>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace TaskListMaui.Source.Shared.Entities
+namespace TaskListMaui.Source.Domain.Shared.Entities
 {
     public abstract class Entity
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using TaskListMaui.Source.Main.ValueObjects;
-using TaskListMaui.Source.Shared.Entities;
-using Email = TaskListMaui.Source.Main.ValueObjects.Email;
+using TaskListMaui.Source.Domain.Main.ValueObjects;
+using TaskListMaui.Source.Domain.Shared.Entities;
+using Email = TaskListMaui.Source.Domain.Main.ValueObjects.Email;
 
-namespace TaskListMaui.Source.Main.Entities
+namespace TaskListMaui.Source.Domain.Main.Entities
 {
     public class User : Entity
     {

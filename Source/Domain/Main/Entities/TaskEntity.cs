@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskListMaui.Source.Shared.Entities;
+using TaskListMaui.Source.Domain.Shared.Entities;
 
-namespace TaskListMaui.Source.Main.Entities
+namespace TaskListMaui.Source.Domain.Main.Entities
 {
     public class TaskEntity : Entity
     {

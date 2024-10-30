@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskListMaui.Source.Shared.UseCases
+namespace TaskListMaui.Source.Domain.Shared.UseCases
 {
     public abstract class Response
     {
