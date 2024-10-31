@@ -4,38 +4,89 @@
              x:Class="TaskListMaui.Source.Screens.Home.MainPage"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
+    <ScrollView BackgroundColor="#000">
         <Grid Padding="15">
             <Grid.RowDefinitions>
+                <RowDefinition Height="350"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
-            <StackLayout VerticalOptions="End" BackgroundColor="Aquamarine" Grid.Row="0">
-                <Label HorizontalOptions="Center" FontAttributes="Bold" Text="Seja Bem Vindo!"/>
-                <Label HorizontalOptions="Center" FontAttributes="Bold" Text="Lista de Tarefas"/>
-                <Image WidthRequest="250" Source="home.jpg"/>
+            <StackLayout VerticalOptions="End" Grid.Row="0">
+                <Label TextColor="#fff" HorizontalOptions="Center" FontAttributes="Bold" Text="Seja Bem Vindo!"/>
+                <Label TextColor="#fff" HorizontalOptions="Center" FontAttributes="Bold" Text="Lista de Tarefas"/>
+                <Border
+                    StrokeShape="RoundRectangle 9" 
+                    
+                     HorizontalOptions="Center">
+                    <Image WidthRequest="250" Source="home.jpg"/>
+                </Border>
+
+            </StackLayout>
+            <StackLayout VerticalOptions="Start" Grid.Row="1">
+                <StackLayout Margin="15">
+                    <Border
+                        Stroke="#202020"
+                        StrokeShape="RoundRectangle 9"    
+                        HorizontalOptions="Center">
+                        <Entry 
+                            BackgroundColor="#202020"
+                            x:Name="Email" 
+                            Keyboard="Email" 
+                            Placeholder="Digite seu email"
+                            PlaceholderColor="#808080"
+                            WidthRequest="300"
+                            HorizontalTextAlignment="Center"
+                            ClearButtonVisibility="WhileEditing"
+                            TextColor="#fff"
+                            />
+                    </Border>
+
+                </StackLayout>
+                <StackLayout Margin="15">
+                    <Border
+                        Stroke="#202020"
+                        StrokeShape="RoundRectangle 9"    
+                        HorizontalOptions="Center">
+                        <Entry
+                        BackgroundColor="#202020"
+                        x:Name="Password" 
+                        Keyboard="Default" 
+                        Placeholder="Digite sua senha"
+                        PlaceholderColor="#808080"
+                        WidthRequest="300"
+                        HorizontalTextAlignment="Center"
+                        ClearButtonVisibility="WhileEditing"
+                        TextColor="#fff"
+                        IsPassword="true"
+                        
+                        />
+                    </Border>
+                </StackLayout>
             </StackLayout>
 
-            <StackLayout BackgroundColor="#fff" Grid.Row="1">
+            <StackLayout VerticalOptions="Start" Grid.Row="2">
                 <StackLayout Padding="5">
                     <Button                       
                         x:Name="Entrar"
                         Text="Entrar"
                         WidthRequest="150"
+                        Clicked="SignIn_Clicked"
                         />
                 </StackLayout>
 
                 <StackLayout Padding="5">
                     <Button
-                        x:Name="Cadastrar"
+                        x:Name="SignUp"
                         Text="Cadastrar"
                         WidthRequest="150"
+                        Clicked="SignUp_Clicked"
                         />
                 </StackLayout>
                 <StackLayout Padding="5" HorizontalOptions="Center">
-                    <Label Text="Clique aqui" 
-       HorizontalOptions="Center" 
-       VerticalOptions="Center">
+                    <Label Text="Esqueceu a senha?"
+                           TextColor="#ffffff"
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center">            
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="HandlerPassword" />
                         </Label.GestureRecognizers>

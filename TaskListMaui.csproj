@@ -63,9 +63,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Source\Screens\Login\" />
-	  <Folder Include="Source\Screens\User\" />
-	  <Folder Include="Source\Screens\Task\" />
+	  <MauiXaml Update="Source\Screens\Task\TaskList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Screens\User\NewUser.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
