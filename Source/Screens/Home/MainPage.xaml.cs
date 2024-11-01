@@ -30,8 +30,8 @@ public partial class MainPage : ContentPage
         };
         HttpClient http = new (handler);
 
-        var email = Email.Text;
-        var password = Password.Text;
+        var email = LoginEmail.Text;
+        var password = LoginPassword.Text;
 
         RequestLogin model = new()
         {
@@ -59,7 +59,7 @@ public partial class MainPage : ContentPage
     }
     private async void SignUp_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NewUser());
+        await Navigation.PushModalAsync(new NewUser());
     }
 }
 
