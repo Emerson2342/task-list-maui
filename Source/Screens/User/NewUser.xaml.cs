@@ -32,6 +32,10 @@ public partial class NewUser : ContentPage
         BorderClose.Stroke = btnCreate.BackgroundColor;
         btnClose.TextColor = btnCreate.BackgroundColor;
 
+        NewName.Text = string.Empty;
+        NewEmail.Text = string.Empty;
+        NewPassword.Text = string.Empty;
+
     }
 
     private async void CloseModal(object sender, EventArgs e)
@@ -59,34 +63,27 @@ public partial class NewUser : ContentPage
             Password = password,
         };
 
+        var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
+
+        var result = await request.Content.ReadFromJsonAsync<Response>();
+
         try
         {
-            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
-
-            var result = await request.Content.ReadFromJsonAsync<Response>();
-
-            if (result == null)
-             await DisplayAlert("Erro", $"Erro ao tentar criar usuário. {result?.Message}", "Fechar");
-
-            //if(result != null && result.Message != null)
-            // await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
-
-            if(result!= null && result.IsSuccess)
-                {await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
-                await Navigation.PopModalAsync();
-            }
-            else
+            if (result != null)
             {
-                await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
+                if (result.IsSuccess)
+                {
+                    await DisplayAlert("Parabéns", $"{result.Message}", "Fechar");
+                    await Navigation.PopModalAsync();
+                }
+                                 
+                if (!result.IsSuccess)
+                    await DisplayAlert("Erro", $"{result.Message}", "Fechar");
+            
             }
-
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             await DisplayAlert("Erro", $"Erro ao criar usuário. {ex.Message}", "Fechar");
         }
-
-
-
     }
 }
