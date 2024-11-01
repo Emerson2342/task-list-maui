@@ -1,18 +1,92 @@
+using System.Net.Http.Json;
+using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
+using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
+
 namespace TaskListMaui.Source.Screens.User;
 
 public partial class NewUser : ContentPage
 {
-	public NewUser()
-	{
-		InitializeComponent();
-		double screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
+    public NewUser()
+    {
+        InitializeComponent();
+        double screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
         double screenHeight = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density;
         ModalStack.WidthRequest = screenWidth * 0.8;
-        ModalStack.HeightRequest = screenHeight * 0.5;
+        ModalStack.HeightRequest = screenHeight * 0.4;
+
+        Row0.Height = ModalStack.HeightRequest * 0.6;
+        Row1.Height = ModalStack.HeightRequest * 0.4;
+
+        WidthRow0.WidthRequest = ModalStack.WidthRequest;
+        WidthRow1.WidthRequest = ModalStack.WidthRequest;
+
+        NewName.WidthRequest = ModalStack.WidthRequest * 0.8;
+        NewEmail.WidthRequest = ModalStack.WidthRequest * 0.8;
+        NewPassword.WidthRequest = ModalStack.WidthRequest * 0.8;
+
+        btnCreate.WidthRequest = ModalStack.WidthRequest * 0.4;
+        btnClose.WidthRequest = ModalStack.WidthRequest * 0.4;
+
+
+
+        BorderClose.Stroke = btnCreate.BackgroundColor;
+        btnClose.TextColor = btnCreate.BackgroundColor;
+
     }
 
-	private async void CloseModal(object sender, EventArgs e)
-	{
-		await Navigation.PopModalAsync();
-	}
+    private async void CloseModal(object sender, EventArgs e)
+    {
+        await Navigation.PopModalAsync();
+    }
+
+
+    private async void OnCreateUser(object sender, EventArgs e)
+    {
+        HttpClientHandler handler = new()
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
+        };
+        var http = new HttpClient(handler);
+
+        var name = NewName.Text;
+        var email = NewEmail.Text;
+        var password = NewPassword.Text;
+
+        RequestNewUser newUser = new()
+        {
+            Name = name,
+            Email = email,
+            Password = password,
+        };
+
+        try
+        {
+            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
+
+            var result = await request.Content.ReadFromJsonAsync<Response>();
+
+            if (result == null)
+             await DisplayAlert("Erro", $"Erro ao tentar criar usuário. {result?.Message}", "Fechar");
+
+            //if(result != null && result.Message != null)
+            // await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
+
+            if(result!= null && result.IsSuccess)
+                {await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
+                await Navigation.PopModalAsync();
+            }
+            else
+            {
+                await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
+            }
+
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Erro ao criar usuário. {ex.Message}", "Fechar");
+        }
+
+
+
+    }
 }

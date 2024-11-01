@@ -66,6 +66,9 @@
 	  <MauiXaml Update="Source\Screens\Task\TaskList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Source\Screens\User\ForgotPassword.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Source\Screens\User\NewUser.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

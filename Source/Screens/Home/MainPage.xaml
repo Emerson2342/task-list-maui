@@ -5,23 +5,23 @@
              Shell.NavBarIsVisible="False">
 
     <ScrollView BackgroundColor="#000">
-        <Grid Padding="15">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="350"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition x:Name="Row0"/>
+                <RowDefinition x:Name="Row1"/>
+                <RowDefinition x:Name="Row2"/>
             </Grid.RowDefinitions>
             <StackLayout VerticalOptions="End" Grid.Row="0">
-                <Label TextColor="#fff" HorizontalOptions="Center" FontAttributes="Bold" Text="Seja Bem Vindo!"/>
-                <Label TextColor="#fff" HorizontalOptions="Center" FontAttributes="Bold" Text="Lista de Tarefas"/>
+                <Label TextColor="#fff" FontSize="30" HorizontalOptions="Center" FontAttributes="Bold" Text="Seja Bem Vindo!"/>
+                <Label TextColor="#fff" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold" Text="Lista de Tarefas"/>
                 <Border
                     StrokeShape="RoundRectangle 9" 
                     
                      HorizontalOptions="Center">
                     <Image WidthRequest="250" Source="home.jpg"/>
                 </Border>
-
             </StackLayout>
+            
             <StackLayout VerticalOptions="Start" Grid.Row="1">
                 <StackLayout Margin="15">
                     <Border
@@ -92,16 +92,7 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </StackLayout>
-
             </StackLayout>
-
-
-
-
         </Grid>
-
-
-
     </ScrollView>
-
 </ContentPage>

@@ -13,13 +13,19 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {    
-        InitializeComponent();   
-        
+        InitializeComponent();
 
+        double screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
+        double screenHeight = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density;
+
+        Row0.Height = screenHeight * 0.4;
+        Row1.Height = screenWidth * 0.4;
+        Row2.Height = screenHeight * 0.2;   
     }
 
-    private void HandlerPassword(object sender, EventArgs e)
+    private async void HandlerPassword(object sender, EventArgs e)
     {
+        await Navigation.PushModalAsync(new ForgotPassword());
     }
 
     private async void SignIn_Clicked(object sender, EventArgs e)
@@ -41,7 +47,7 @@ public partial class MainPage : ContentPage
 
         try
         {
-            var request = await http.PostAsJsonAsync("https://localhost:7103/login", model);
+            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/login", model);
             var response = await request.Content.ReadFromJsonAsync<Response>();
             if (response == null || response?.User == null || response.IsSuccess == false) {
               await DisplayAlert("Erro ao logar", $"{response?.Message}", "Fechar");
@@ -53,7 +59,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Erro ao logar", $"{ex.Message}", "Fechar");
+            await DisplayAlert("Erro ao logar", $"{ex.InnerException}", "Fechar");
         }
 
     }

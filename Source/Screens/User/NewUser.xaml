@@ -4,16 +4,95 @@
              x:Class="TaskListMaui.Source.Screens.User.NewUser"
              BackgroundColor="#99000000"             
              >
-    <Border
-    Stroke="#202020"
-    StrokeShape="RoundRectangle 9"    
-    HorizontalOptions="Center">
-    <StackLayout
-        x:Name="ModalStack"
+    <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        <Border
+    Stroke="#99000000"
+    StrokeShape="RoundRectangle 9"        
+        HorizontalOptions="Center"
+        VerticalOptions="Center"       
+        >
+
+            <StackLayout
         BackgroundColor="#fff"
-        Padding="20" VerticalOptions="Center">
-        <Label Text="Este é o modal" HorizontalOptions="Center" />
-        <Button VerticalOptions="End" Text="Fechar Modal" Clicked="CloseModal"/>
-    </StackLayout>
-    </Border>
+        Padding="20" 
+        VerticalOptions="Center"  
+        x:Name="ModalStack"
+        >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Row0"/>
+                        <RowDefinition x:Name="Row1"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout
+                    x:Name="WidthRow0"
+                    Grid.Row="0">
+                        <Label Text="Criar Conta" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <StackLayout Margin="15" Spacing="15">
+                            <Border
+                        Stroke="#f5f5f5"
+                        StrokeShape="RoundRectangle 9"    
+                        HorizontalOptions="Center">
+                                <Entry
+                            BackgroundColor="#f5f5f5"
+                            x:Name="NewName" 
+                            Keyboard="Text" 
+                            Placeholder="Digite seu Nome"
+                            PlaceholderColor="#888"
+                            HorizontalTextAlignment="Center"
+                            ClearButtonVisibility="WhileEditing"
+                            />
+                            </Border>
+                            <Entry
+                                BackgroundColor="#f5f5f5"
+                                x:Name="NewEmail" 
+                                Keyboard="Text" 
+                                Placeholder="Digite seu Email"
+                                PlaceholderColor="#888"
+                                HorizontalTextAlignment="Center"
+                                ClearButtonVisibility="WhileEditing"                            
+                                />
+                            <Entry
+                            BackgroundColor="#f5f5f5"
+                            x:Name="NewPassword" 
+                            Keyboard="Text" 
+                            Placeholder="Digite sua Senha"
+                            PlaceholderColor="#888"
+                            HorizontalTextAlignment="Center"
+                            ClearButtonVisibility="WhileEditing"                            
+                            />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout
+                    x:Name="WidthRow1"
+                    Grid.Row="1"
+                    Spacing="3"
+                    Orientation="Horizontal"
+                    Padding="25"
+                    >
+                        <Border
+                        x:Name="BorderClose"
+                         Stroke="#000"
+                         StrokeShape="RoundRectangle 9"    
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                                        <Button
+                        x:Name="btnClose"
+                        VerticalOptions="Center" 
+                        Text="Cancelar"
+                        Clicked="CloseModal"
+                        BackgroundColor="#fff"
+            />
+                        </Border>
+                        <Button
+                        x:Name="btnCreate"
+                        VerticalOptions="Center" 
+                        Text="Cadastrar" 
+                        Clicked="OnCreateUser"
+                        />
+
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Border>
+    </ScrollView>
 </ContentPage>
