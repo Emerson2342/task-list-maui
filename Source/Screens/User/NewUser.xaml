@@ -4,21 +4,16 @@
              x:Class="TaskListMaui.Source.Screens.User.NewUser"
              BackgroundColor="#99000000"             
              >
-
-    <ScrollView 
-        VerticalOptions="CenterAndExpand" 
-        HorizontalOptions="CenterAndExpand"  
-        
-        >
-
+    <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
         <Border
-            Stroke="#99000000"
-            StrokeShape="RoundRectangle 9"        
-            HorizontalOptions="Center"
-            VerticalOptions="Center"       
+    Stroke="#99000000"
+    StrokeShape="RoundRectangle 9"        
+        HorizontalOptions="Center"
+        VerticalOptions="Center"       
         >
+
             <StackLayout
-        BackgroundColor="#fff"                
+        BackgroundColor="#fff"
         Padding="20" 
         VerticalOptions="Center"  
         x:Name="ModalStack"
@@ -54,8 +49,7 @@
                                 Placeholder="Digite seu Email"
                                 PlaceholderColor="#888"
                                 HorizontalTextAlignment="Center"
-                                ClearButtonVisibility="WhileEditing"
-                                TextTransform="Lowercase"
+                                ClearButtonVisibility="WhileEditing"                            
                                 />
                             <Entry
                             BackgroundColor="#f5f5f5"
@@ -68,10 +62,6 @@
                             />
                         </StackLayout>
                     </StackLayout>
-                    <ActivityIndicator
-                         x:Name="Loading"
-                         HorizontalOptions="Center"
-                        VerticalOptions="Center" />
                     <StackLayout
                     x:Name="WidthRow1"
                     Grid.Row="1"
@@ -85,7 +75,7 @@
                          StrokeShape="RoundRectangle 9"    
                         HorizontalOptions="Center"
                         VerticalOptions="Center">
-                            <Button
+                                        <Button
                         x:Name="btnClose"
                         VerticalOptions="Center" 
                         Text="Cancelar"

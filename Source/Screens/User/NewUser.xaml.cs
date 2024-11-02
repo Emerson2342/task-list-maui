@@ -27,6 +27,8 @@ public partial class NewUser : ContentPage
         btnCreate.WidthRequest = ModalStack.WidthRequest * 0.4;
         btnClose.WidthRequest = ModalStack.WidthRequest * 0.4;
 
+
+
         BorderClose.Stroke = btnCreate.BackgroundColor;
         btnClose.TextColor = btnCreate.BackgroundColor;
 
@@ -44,30 +46,29 @@ public partial class NewUser : ContentPage
 
     private async void OnCreateUser(object sender, EventArgs e)
     {
-        
+        HttpClientHandler handler = new()
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
+        };
+        var http = new HttpClient(handler);
+
+        var name = NewName.Text;
+        var email = NewEmail.Text;
+        var password = NewPassword.Text;
+
+        RequestNewUser newUser = new()
+        {
+            Name = name,
+            Email = email,
+            Password = password,
+        };
+
+        var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
+
+        var result = await request.Content.ReadFromJsonAsync<Response>();
+
         try
         {
-            Loading.IsRunning = true;
-            btnCreate.IsEnabled = false;
-            HttpClientHandler handler = new()
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
-            };
-            var http = new HttpClient(handler);
-
-            var name = NewName.Text;
-            var email = NewEmail.Text;
-            var password = NewPassword.Text;
-
-            RequestNewUser newUser = new()
-            {
-                Name = name,
-                Email = email,
-                Password = password,
-            };
-            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
-
-            var result = await request.Content.ReadFromJsonAsync<Response>();
             if (result != null)
             {
                 if (result.IsSuccess)
@@ -75,20 +76,14 @@ public partial class NewUser : ContentPage
                     await DisplayAlert("Parabéns", $"{result.Message}", "Fechar");
                     await Navigation.PopModalAsync();
                 }
-
+                                 
                 if (!result.IsSuccess)
                     await DisplayAlert("Erro", $"{result.Message}", "Fechar");
+            
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             await DisplayAlert("Erro", $"Erro ao criar usuário. {ex.Message}", "Fechar");
-
-        }
-        finally
-        {
-            Loading.IsRunning = false;
-            btnCreate.IsEnabled = true;
         }
     }
 }
