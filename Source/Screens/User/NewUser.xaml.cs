@@ -65,7 +65,7 @@ public partial class NewUser : ContentPage
                 Email = email,
                 Password = password,
             };
-            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/user/create", newUser);
+            var request = await http.PostAsJsonAsync("https://192.168.10.10:7103/user/create-maui", newUser);
 
             var result = await request.Content.ReadFromJsonAsync<Response>();
             if (result != null)

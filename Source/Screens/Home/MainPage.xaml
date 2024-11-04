@@ -21,7 +21,19 @@
                     <Image WidthRequest="250" Source="home.jpg"/>
                 </Border>
             </StackLayout>
+            <StackLayout
+                x:Name="Loading"
+                 BackgroundColor="#80000000"
+                Padding="150"
+                >
+                <ActivityIndicator
+                IsRunning="True"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" 
+    />
+            </StackLayout>
             
+
             <StackLayout VerticalOptions="Start" Grid.Row="1">
                 <StackLayout Margin="15">
                     <Border
@@ -40,7 +52,6 @@
                             TextColor="#fff"
                             />
                     </Border>
-
                 </StackLayout>
                 <StackLayout Margin="15">
                     <Border
@@ -93,6 +104,7 @@
                     </Label>
                 </StackLayout>
             </StackLayout>
+            
         </Grid>
     </ScrollView>
 </ContentPage>

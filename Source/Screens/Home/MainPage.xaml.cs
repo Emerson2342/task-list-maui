@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
 using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
-using TaskListMaui.Source.Screens.Task;
+using TaskListMaui.Source.Screens.Tasks;
 using TaskListMaui.Source.Screens.User;
 
 namespace TaskListMaui.Source.Screens.Home;
@@ -14,6 +14,8 @@ public partial class MainPage : ContentPage
     public MainPage()
     {    
         InitializeComponent();
+
+        Loading.IsVisible = false;
 
         double screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
         double screenHeight = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density;
@@ -47,10 +49,13 @@ public partial class MainPage : ContentPage
 
         try
         {
-            var request = await http.PostAsJsonAsync("https://192.168.0.101:7103/login", model);
+            Loading.IsVisible = true;
+
+            var request = await http.PostAsJsonAsync("https://192.168.10.10:7103/login", model);
             var response = await request.Content.ReadFromJsonAsync<Response>();
-            if (response == null || response?.User == null || response.IsSuccess == false) {
-              await DisplayAlert("Erro ao logar", $"{response?.Message}", "Fechar");
+            if (response == null || response?.User == null || response.IsSuccess == false)
+            {
+                await DisplayAlert("Erro ao logar", $"{response?.Message}", "Fechar");
             }
             else
             {
@@ -59,7 +64,10 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Erro ao logar", $"{ex.InnerException}", "Fechar");
+            await DisplayAlert("Erro ao logar", $"{ex.Message} - {ex.InnerException}", "Fechar");
+        }
+        finally { 
+            Loading.IsVisible = false;
         }
 
     }
