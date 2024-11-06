@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskListMaui.Source.Screens.Tasks.NewTask"
+             BackgroundColor="#99000000" >
+    <ScrollView 
+     VerticalOptions="CenterAndExpand" 
+     HorizontalOptions="CenterAndExpand"     
+     >
+        <Border
+         StrokeShape="RoundRectangle 9"        
+         HorizontalOptions="Center"
+         VerticalOptions="Center"
+          Stroke="#830ad1"
+            StrokeThickness="2"
+     >
+            <StackLayout
+     BackgroundColor="#fff"                
+     Padding="20" 
+     VerticalOptions="Center"
+                WidthRequest="350"
+     >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout
+                 x:Name="WidthRow0"
+                 Grid.Row="0">
+                        <Label Text="Criar Conta" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <StackLayout Margin="15" Spacing="15">
+                            <Border
+                     Stroke="#f5f5f5"
+                     StrokeShape="RoundRectangle 9"    
+                     HorizontalOptions="Center">
+                                <Entry
+                         BackgroundColor="#f5f5f5"
+                         x:Name="TitleTask" 
+                         Keyboard="Text" 
+                         Placeholder="Digite o nome da tarefa"
+                         PlaceholderColor="#888"
+                         HorizontalTextAlignment="Center"
+                         ClearButtonVisibility="WhileEditing"
+                                    WidthRequest="250"
+                         />
+                            </Border>
+                            <Border
+                            Stroke="#f5f5f5"
+                            StrokeShape="RoundRectangle 9"    
+                            HorizontalOptions="Center">
+                                <Editor
+                                    x:Name="Description"
+                                    BackgroundColor="#f5f5f5"
+                                    WidthRequest="280"
+                                    HeightRequest="150"
+                                    ></Editor>
+                            </Border>
+                            <Border
+                            Stroke="#f5f5f5"
+                            StrokeShape="RoundRectangle 9"    
+                            HorizontalOptions="Center">
+                            </Border>
+                            <Label Text="Data de início"/>
+                            <DatePicker 
+                                x:Name="StartDate"
+                             />
+                            <Label Text="Data do término"/>
+                            <DatePicker
+                                x:Name="Deadline"
+                                />
+                        </StackLayout>
+                    </StackLayout>
+                    <ActivityIndicator
+                      x:Name="Loading"
+                      HorizontalOptions="Center"
+                     VerticalOptions="Center" />
+                    <StackLayout
+                         WidthRequest="300"
+                         Grid.Row="1"
+                         Spacing="3"
+                         Orientation="Horizontal"
+                         
+                         >
+                        <Border
+                     x:Name="BorderClose"
+                      Stroke="#830ad1"
+                      StrokeShape="RoundRectangle 9"    
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                            WidthRequest="150"
+                            >
+                            <Button
+                     VerticalOptions="Center" 
+                     Text="Cancelar"
+                     Clicked="CloseModal"
+                     BackgroundColor="#fff"
+                                TextColor="#830ad1"
+                                WidthRequest="100"
+                            />
+                        </Border>
+                        <Border
+                         Stroke="#830ad1"
+                         StrokeShape="RoundRectangle 9"    
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                               WidthRequest="150"
+                               >
+                            <Button
+                     x:Name="btnCreate"
+                     VerticalOptions="Center" 
+                     Text="Cadastrar" 
+                     Clicked="OnCreateTask"
+                                WidthRequest="150"
+                     />
+                        </Border>
+
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Border>
+    </ScrollView>
+</ContentPage>

@@ -63,6 +63,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Source\Screens\Tasks\DeleteTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Screens\Tasks\EditTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Screens\Tasks\NewTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Source\Screens\Tasks\TaskList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

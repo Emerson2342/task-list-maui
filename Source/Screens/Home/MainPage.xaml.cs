@@ -22,7 +22,10 @@ public partial class MainPage : ContentPage
 
         Row0.Height = screenHeight * 0.4;
         Row1.Height = screenWidth * 0.4;
-        Row2.Height = screenHeight * 0.2;   
+        Row2.Height = screenHeight * 0.2;
+
+        LoginEmail.Text = "lyncoln_erc@hotmail.com";
+        LoginPassword.Text = "123456";
     }
 
     private async void HandlerPassword(object sender, EventArgs e)

@@ -1,33 +1,159 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TaskListMaui.Source.Screens.Tasks"
+             xmlns:model="clr-namespace:TaskListMaui.Source.Domain.Main.Entities"
              x:Class="TaskListMaui.Source.Screens.Tasks.TaskList"
-             Title="TaskList">
+             x:DataType="local:TaskList"
+             Shell.NavBarIsVisible="False">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <StackLayout BackgroundColor="#faf" Grid.Row="0">
-              
-            </StackLayout>
-            <StackLayout BackgroundColor="#cecece" Grid.Row="1">
-                <CollectionView ItemsSource="{Binding TasksList}" IsGrouped="True">
+            <StackLayout BackgroundColor="#000" Grid.Row="0">
+                <Label 
+                    Padding="15"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="20" 
+                    FontAttributes="Italic,Bold" 
+                    Text="Lista de Tarefas"
+                    TextColor="#fff"
+                    />
+            </StackLayout>                     
+
+            <ScrollView
+                Grid.Row="1"
+                BackgroundColor="#000"
+                >
+                <CollectionView
+                        ItemsSource="{Binding TasksList}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Label Text="{Binding Title}" />
-                            </Grid>
+                        <DataTemplate 
+                            x:DataType="model:TaskEntity"
+                            >
+                            <Border
+                                StrokeShape="RoundRectangle 9"     
+                                 HorizontalOptions="Center"
+                                Stroke="#202020"
+                                StrokeThickness="2"
+                                Margin="1"
+                                >
+                            <StackLayout
+                                Orientation="Horizontal"                              
+                                BackgroundColor="#fff"
+                                >
+                                    <StackLayout
+                                    WidthRequest="380"
+                                     Padding="3"
+                                    >
+                                        <StackLayout
+                                        >
+                                            <Label x:Name="IdTask" Text="{Binding Id}" TextColor="#fff"/>
+                                            <Label Padding="0,7" HorizontalOptions="Center" FontSize="17" FontAttributes="Bold" Text="{Binding Title}"/>
+                                            <Label Text="{Binding Description}"/>
+                                            
+                                        </StackLayout>
+                                        <StackLayout 
+                                        Orientation="Horizontal"
+                                        WidthRequest="300"
+                                            HorizontalOptions="Start"
+                                        >
+                                            <Label
+                                                WidthRequest="130"
+                                                >
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span  Text="Início: " FontAttributes="Bold" />
+                                                        <Span FontAttributes="Bold" TextColor="Green" Text="{Binding StartTime}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label
+                                                WidthRequest="150"
+                                                >
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Término: " FontAttributes="Bold"/>
+                                                        <Span FontAttributes="Bold" TextColor="Red" Text="{Binding Deadline}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout
+                                                Orientation="Horizontal"
+                                                WidthRequest="80"
+                                                >
+                                                <StackLayout
+                                                    WidthRequest="40"
+                                                    HorizontalOptions="Center"
+                                                    >
+                                                <ImageButton 
+                                                HeightRequest="15"
+                                                WidthRequest="15"
+                                                Source="edit.png" />
+                                                    
+                                                </StackLayout>
+                                                <StackLayout
+                                                    WidthRequest="40"
+                                                    HorizontalOptions="Center"
+                                                    >
+                                            <ImageButton 
+                                                Source="delete.png"                                                
+                                                HeightRequest="15"
+                                                WidthRequest="15"
+                                                Clicked="Delete_Clicked"
+                                                />
+                                            </StackLayout>
+                                            </StackLayout>
+                                            
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
-            <StackLayout BackgroundColor="#00ffff" Grid.Row="2">               
+                
+            </ScrollView>
+            <StackLayout
+                Grid.Row="2"
+                BackgroundColor="#000"
+                >
+                <ImageButton 
+             Source="add.png"
+             WidthRequest="50"
+             HeightRequest="50"
+             HorizontalOptions="End"
+                 VerticalOptions="Center"
+                 Margin="15, 0"
+                    Clicked="ModalAddTask"
+            /> 
             </StackLayout>
             
+            <StackLayout 
+                BackgroundColor="#000"
+                Grid.Row="3"                
+                >
+                
+                <Border
+                    StrokeShape="RoundRectangle 9"     
+                     HorizontalOptions="Center"
+                    Stroke="#202020"
+                    StrokeThickness="2"
+                    Margin="1"
+                    >
+                    <Button
+                        WidthRequest="120"
+                        Text="Voltar"
+                        Clicked="Back_Clicked"
+                        />
+                </Border>
+            </StackLayout>            
         </Grid>
     </ScrollView>
 </ContentPage>
