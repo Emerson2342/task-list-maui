@@ -2,6 +2,76 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaskListMaui.Source.Screens.Tasks.EditTask"
-             Title="EditTask">
-    
+             BackgroundColor="#80000000">
+    <Border
+        StrokeShape="RoundRectangle 9"
+         VerticalOptions="Center"
+        Stroke="#830ad1"
+        StrokeThickness="2"
+        Margin="20,0"
+        >
+        <ScrollView
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="#fff">
+            <StackLayout
+                Margin="0"
+                Padding="15"
+                Spacing="3">
+                <ActivityIndicator
+                  x:Name="Loading"
+                  HorizontalOptions="Center"
+                 VerticalOptions="Center" />
+
+                <Label Text="Título" HorizontalOptions="Center"/>
+                <Entry
+                 x:Name="ABTitle"
+                    FontAttributes="Bold"
+                    BackgroundColor="#f5f5f5"
+                    />
+                <Label Text="Descrição" HorizontalOptions="Center" />
+                <Editor 
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="ABDescription"
+                    BackgroundColor="#f5f5f5"
+                 />
+                <Label Text="Início" HorizontalOptions="Center"/>
+                <DatePicker
+                 x:Name="ABStartTime"
+                    BackgroundColor="#f5f5f5"
+                    Format="dd-MM-yyyy"
+                 />
+                <Label Text="Término" HorizontalOptions="Center"/>
+                <DatePicker 
+                 x:Name="ABDeadline"
+                    BackgroundColor="#f5f5f5"
+                    Format="dd-MM-yyyy"
+                 />
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="20"
+                    Padding="5"
+                    >
+                    <Button
+                        Clicked="Back_Clicked"
+                        Text="Voltar"
+                        HorizontalOptions="CenterAndExpand"
+                        Padding="40,0"
+                        FontAttributes="Bold"
+                        BackgroundColor="Black"
+                        />
+                    <Button
+                        x:Name="btnEditTask"
+                        Clicked="EditTask_Clicked"
+                        Text="Editar"
+                        Padding="40,0"
+                        FontAttributes="Bold"
+                        HorizontalOptions="CenterAndExpand"
+                        />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </Border>
 </ContentPage>

@@ -9,11 +9,17 @@ namespace TaskListMaui.Source.Screens.Tasks;
 public partial class DeleteTask : ContentPage
 {
     private readonly string _token;
-    private readonly string _taskId;
+    private readonly Guid _taskId;
 
-	public DeleteTask(string token, string taskId)
+    private readonly string Ip = Configuration.IpAddress;
+
+    public DeleteTask(string token, Guid taskId, string title)
 	{
 		InitializeComponent();
+        _token = token;
+        _taskId = taskId;
+
+        ABC.Text = title;
 	}
 
     private async void Back_Clicked(object sender, EventArgs e)
@@ -35,9 +41,9 @@ public partial class DeleteTask : ContentPage
 
             RequestTask taskToDelete = new();
 
-            taskToDelete.Id = Guid.Parse(_taskId);
+            taskToDelete.Id = _taskId;
 
-            var request = await http.PostAsJsonAsync("https://192.168.10.10:7103/task/delete", taskToDelete);
+            var request = await http.PostAsJsonAsync($"https://{Ip}/task/delete", taskToDelete);
 
             if (request == null)
             {

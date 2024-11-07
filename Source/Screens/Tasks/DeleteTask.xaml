@@ -3,19 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaskListMaui.Source.Screens.Tasks.DeleteTask"
              BackgroundColor="#90000000">
-    <StackLayout>
+
+
+    <Border
+    StrokeShape="RoundRectangle 9"     
+     HorizontalOptions="Center"
+        VerticalOptions="Center"
+    Stroke="#830ad1"
+    StrokeThickness="2"
+    Margin="20"
+    >
+        <StackLayout
+        BackgroundColor="#fff"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Padding="50,20"
+        >
         <StackLayout>
-            <Label Text="Deseja apagar a tarefa?"/>
-        </StackLayout>
-        <StackLayout>
-            <Button 
-            Text="Não"
-            Clicked="Back_Clicked"
+                <Label 
+                    HorizontalOptions="FillAndExpand"
+                    Padding="0,10">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontSize="20" Text="Deseja apagar a tarefa "/>
+                            <Span FontSize="20" x:Name="ABC" FontAttributes="Bold"/>
+                                <Span FontSize="20" Text=" ?"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+            <StackLayout
+            Orientation="Horizontal"
+            HorizontalOptions="FillAndExpand"
+            Spacing="30">
+                <Button
+                    Padding="40,0"
+                    Text="Não"
+                    Clicked="Back_Clicked"
+                    BackgroundColor="#000"
+                    FontAttributes="Bold"
+                    HorizontalOptions="CenterAndExpand" />
+
+                <Button
+                    Padding="40,0"
+                    Text="Sim"
+                    Clicked="Delete_Clicked"
+                    FontAttributes="Bold"
+                    HorizontalOptions="CenterAndExpand"
             />
-            <Button 
-            Text="Sim"
-            Clicked="Delete_Clicked"
-            />
-        </StackLayout>
+            </StackLayout>
     </StackLayout>
+    </Border>
 </ContentPage>

@@ -6,6 +6,7 @@ namespace TaskListMaui.Source.Screens.User;
 
 public partial class NewUser : ContentPage
 {
+    private readonly string Ip = Configuration.IpAddress;
     public NewUser()
     {
         InitializeComponent();
@@ -65,7 +66,7 @@ public partial class NewUser : ContentPage
                 Email = email,
                 Password = password,
             };
-            var request = await http.PostAsJsonAsync("https://192.168.10.10:7103/user/create-maui", newUser);
+            var request = await http.PostAsJsonAsync($"https://{Ip}/user/create-maui", newUser);
 
             var result = await request.Content.ReadFromJsonAsync<Response>();
             if (result != null)
@@ -75,14 +76,12 @@ public partial class NewUser : ContentPage
                     await DisplayAlert("Parabéns", $"{result.Message}", "Fechar");
                     await Navigation.PopModalAsync();
                 }
-
-                if (!result.IsSuccess)
                     await DisplayAlert("Erro", $"{result.Message}", "Fechar");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Erro", $"Erro ao criar usuário. {ex.Message}", "Fechar");
+            await DisplayAlert("Erro", $"{ex.Message} - {ex.InnerException}", "Fechar");
 
         }
         finally

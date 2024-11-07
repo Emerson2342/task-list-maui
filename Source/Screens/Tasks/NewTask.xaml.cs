@@ -11,12 +11,18 @@ public partial class NewTask : ContentPage
     private readonly string _userId;
     private readonly string _token;
 
-	public NewTask(string userId, string token)
+
+    private readonly string Ip = Configuration.IpAddress;
+
+    public NewTask(string userId, string token)
 	{
         _userId = userId;
         _token = token;
 		InitializeComponent();
-        
+        TitleTask.Text = string.Empty;
+        Description.Text = string.Empty;
+
+
     }
 
     private async void CloseModal(object sender, EventArgs e)
@@ -60,17 +66,26 @@ public partial class NewTask : ContentPage
 
             http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
 
-            var url = "https://192.168.10.10:7103/task/create";
+            var url = $"https://{Ip}/task/create";
 
 
             var response = await http.PostAsJsonAsync(url, newTask);
 
             var result = await response.Content.ReadFromJsonAsync<Response>();
 
+            if(result == null)
+            {
+                await DisplayAlert("Mensagem", $"Erro ao criar tarefa", "Fechar");
+                return;
+            }
 
-
-            await DisplayAlert("Mensagem", $"{result?.Message}", "Fechar");
-            await Navigation.PopModalAsync();
+            if (result.IsSuccess)
+            {
+                await DisplayAlert("Mensagem", $"{result.Message}", "Fechar");
+                await Navigation.PopModalAsync();
+            }
+                await DisplayAlert("Erro", $"{result.Message}", "Fechar");
+                        
         }
         catch (Exception ex)
         {

@@ -1,17 +1,18 @@
 ﻿
 using System.Net.Http.Json;
 using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
-using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
 using TaskListMaui.Source.Screens.Tasks;
 using TaskListMaui.Source.Screens.User;
 
 namespace TaskListMaui.Source.Screens.Home;
 
-public partial class MainPage : ContentPage
+public partial class LoginPage : ContentPage
 {
 
-    public MainPage()
+    private readonly string Ip = Configuration.IpAddress;
+
+    public LoginPage()
     {    
         InitializeComponent();
 
@@ -54,7 +55,7 @@ public partial class MainPage : ContentPage
         {
             Loading.IsVisible = true;
 
-            var request = await http.PostAsJsonAsync("https://192.168.10.10:7103/login", model);
+            var request = await http.PostAsJsonAsync($"https://{Ip}/login", model);
             var response = await request.Content.ReadFromJsonAsync<Response>();
             if (response == null || response?.User == null || response.IsSuccess == false)
             {
