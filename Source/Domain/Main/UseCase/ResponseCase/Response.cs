@@ -23,5 +23,17 @@ namespace TaskListMaui.Source.Domain.Main.UseCase.ResponseCase
         public TaskEntity? Task{ get; set; }
         [JsonPropertyName("tasksList")]
         public List<TaskEntity> TaskList { get; set; } = [];
+
+        [JsonConstructor]
+        public Response()
+        {
+            
+        }
+
+        public Response(string message, int status)
+        {
+            Message = message;
+            Status = status;
+        }
     }
 }

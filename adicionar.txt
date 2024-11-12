@@ -1,8 +1,8 @@
-﻿- Arrastar para esquerda para excluir.
+﻿ok - Arrastar para esquerda para excluir.
 - Clicando abre a tarefa para visualização ou edição.
 - Acrescentar Deeplink na confirmação do e-mail.
 - A tarefa pode ter uma foto (galeria ou tirar).
 - Compartilhar a tarefa via WhatsApp (clica e segura e mostra opção de compartilhar).
 - Gerar um APK para que possa ser distribuído (a App tem que possuir um ícone).
-- Opção para Logout.
-- Manter o Login até o Logout ou Token expirado.
+ok - Opção para Logout.
+ok - Manter o Login até o Logout ou Token expirado.

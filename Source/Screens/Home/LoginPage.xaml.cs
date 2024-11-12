@@ -1,6 +1,9 @@
 ﻿
+using Microsoft.Extensions.Logging;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Json;
 using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
+using TaskListMaui.Source.Domain.Main.Services;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
 using TaskListMaui.Source.Screens.Tasks;
 using TaskListMaui.Source.Screens.User;
@@ -13,7 +16,8 @@ public partial class LoginPage : ContentPage
     private readonly string Ip = Configuration.IpAddress;
 
     public LoginPage()
-    {    
+    {
+        IsLogged();
         InitializeComponent();
 
         Loading.IsVisible = false;
@@ -29,6 +33,14 @@ public partial class LoginPage : ContentPage
         LoginPassword.Text = "123456";
     }
 
+    private async void IsLogged()
+    {        
+        if (!string.IsNullOrEmpty(await AuthenticationService.GetToken()))
+        {
+            await Navigation.PushModalAsync(new TaskList());
+        }
+    }
+
     private async void HandlerPassword(object sender, EventArgs e)
     {
         await Navigation.PushModalAsync(new ForgotPassword());
@@ -40,7 +52,7 @@ public partial class LoginPage : ContentPage
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
         };
-        HttpClient http = new (handler);
+        HttpClient http = new(handler);
 
         var email = LoginEmail.Text;
         var password = LoginPassword.Text;
@@ -63,14 +75,18 @@ public partial class LoginPage : ContentPage
             }
             else
             {
-                await Navigation.PushAsync(new TaskList(response.User.Token, response.User.Id.ToString()));
+
+                await AuthenticationService.SaveToken(response.User.Token);
+                await Navigation.PushModalAsync(new TaskList());
+
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Erro ao logar", $"{ex.Message} - {ex.InnerException}", "Fechar");
         }
-        finally { 
+        finally
+        {
             Loading.IsVisible = false;
         }
 

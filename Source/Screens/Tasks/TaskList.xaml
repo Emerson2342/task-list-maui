@@ -200,8 +200,8 @@
                     Margin="1"
                     >
                     <Button
-                        Padding="70,0"
-                        Text="Voltar"
+                        Padding="30,0"
+                        Text="Sair"
                         FontAttributes="Bold"
                         Clicked="Back_Clicked"
                         />

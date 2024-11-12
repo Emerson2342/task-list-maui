@@ -57,18 +57,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+	  <AndroidResource Remove="Source\Domain\Main\NewFolder\**" />
+	  <Compile Remove="Source\Domain\Main\NewFolder\**" />
+	  <EmbeddedResource Remove="Source\Domain\Main\NewFolder\**" />
+	  <MauiCss Remove="Source\Domain\Main\NewFolder\**" />
+	  <MauiXaml Remove="Source\Domain\Main\NewFolder\**" />
+	  <None Remove="Source\Domain\Main\NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Source\Screens\Authorized\AuthorizedUser.xaml.cs">
+	    <DependentUpon>AuthorizedUser.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Source\Screens\Home\LoginPage.xaml.cs">
 	    <DependentUpon>MainPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Source\Screens\Authorized\AuthorizedUser.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Source\Screens\Tasks\DeleteTask.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -76,6 +92,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Source\Screens\Tasks\NewTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Source\Screens\Tasks\ShowTask.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Source\Screens\Tasks\TaskList.xaml">

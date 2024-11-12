@@ -32,6 +32,7 @@
                 <Label Text="Descrição" HorizontalOptions="Center" />
                 <Editor 
                     HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
                     x:Name="ABDescription"
                     BackgroundColor="#f5f5f5"
                  />

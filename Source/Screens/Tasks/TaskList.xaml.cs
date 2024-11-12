@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http.Headers;
@@ -5,7 +6,9 @@ using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TaskListMaui.Source.Domain.Main.Entities;
+using TaskListMaui.Source.Domain.Main.Services;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
+using TaskListMaui.Source.Screens.Authorized;
 using TaskListMaui.Source.Screens.Home;
 using TaskListMaui.Source.Screens.User;
 
@@ -13,17 +16,11 @@ namespace TaskListMaui.Source.Screens.Tasks;
 
 public partial class TaskList : ContentPage, INotifyPropertyChanged
 {
-    private readonly string _token;
-    private readonly string _userId;
     private TaskEntity? _selectedTask;
+    private bool _isSwapping = false;
 
+    private ObservableCollection<TaskEntity> _tasksList { get; set; } = new();
 
-    private bool isSwapping = false;
-
-
-    private readonly string Ip = Configuration.IpAddress;
-
-    public ObservableCollection<TaskEntity> _tasksList { get; set; } = new();
     public ObservableCollection<TaskEntity> TasksList
     {
         get => _tasksList;
@@ -33,20 +30,28 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     public new event PropertyChangedEventHandler? PropertyChanged;
-    public TaskList(string token, string userId)
+
+    public TaskList()
     {
+  
         InitializeComponent();
-
-
-        _token = token;
-        _userId = userId;
-
         BindingContext = this;
     }
 
     protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (string.IsNullOrEmpty(await AuthenticationService.GetToken()))
+        {
+            await Navigation.PushModalAsync(new LoginPage());
+            return;
+        }
+        LoadTasks();
+    }
+
+    private async void LoadTasks()
     {
         base.OnAppearing();
 
@@ -56,9 +61,9 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
         };
         HttpClient http = new(handler);
 
-        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await AuthenticationService.GetToken());
 
-        var request = await http.GetAsync($"https://{Ip}/task/list/{_userId}");
+        var request = await http.GetAsync($"https://{Configuration.IpAddress}/task/list/{await AuthenticationService.GetUserId()}");
 
         if (request.IsSuccessStatusCode)
         {
@@ -74,17 +79,16 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
                 await DisplayAlert("Erro", "Erro ao ler dos dados", "Fechar");
             return;
         }
-
     }
+
     private void StartSwipe(object sender, EventArgs e)
     {
-
-        isSwapping = true;
+        _isSwapping = true;
     }
 
     private void EndSwipe(object sender, EventArgs e)
     {
-        isSwapping = false;
+        _isSwapping = false;
     }
 
     private void SelectTask(object sender, SelectionChangedEventArgs e)
@@ -99,10 +103,9 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
 
         _selectedTask = task;
 
-       // if (!isSwapping)
-            //ShowSelectedTask();
-        //await Task.Delay(500);
-       // isSwapping = false;
+        if (!_isSwapping)
+            ShowTask_Clicked(sender, e);
+          _isSwapping = false;
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -112,12 +115,16 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
 
     private async void Back_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LoginPage());
+        AuthenticationService.RemoveToken();
+        await Navigation.PushModalAsync(new LoginPage());
     }
 
     private async void ModalAddTask(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new NewTask(_userId, _token));
+        System.Diagnostics.Debug.Assert(await AuthenticationService.GetToken() != null);
+
+        await Navigation.PushModalAsync(new NewTask(await AuthenticationService.GetUserId(),
+            await AuthenticationService.GetToken()));
     }
 
     private async void Delete_Clicked(object sender, EventArgs e)
@@ -128,9 +135,13 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             return;
         }
 
-        await Navigation.PushModalAsync(new DeleteTask(_token, _selectedTask.Id, _selectedTask.Title));
+        await Navigation.PushModalAsync(new DeleteTask(await AuthenticationService.GetToken(), _selectedTask.Id, _selectedTask.Title));
     }
 
+    private async void ShowTask_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new ShowTask(_selectedTask));
+    }
     private async void Edit_Clicked(object sender, EventArgs e)
     {
         if (_selectedTask == null)
@@ -139,12 +150,12 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             return;
         }
 
-        await Navigation.PushModalAsync(new EditTask(_token, _selectedTask.Id.ToString()));
+        await Navigation.PushModalAsync(new EditTask(await AuthenticationService.GetToken(), _selectedTask.Id.ToString()));
 
     }
 
     private async void ChangePassword_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new ChangePassword(_token));
+        await Navigation.PushModalAsync(new ChangePassword(await AuthenticationService.GetToken()));
     }
 }
