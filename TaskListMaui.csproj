@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>TaskListMaui</ApplicationTitle>
+		<ApplicationTitle>Lista de Tarefas</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.tasklistmaui</ApplicationId>

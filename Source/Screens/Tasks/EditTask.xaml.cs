@@ -16,7 +16,7 @@ public partial class EditTask : ContentPage
     private readonly string Ip = Configuration.IpAddress;
 
     private readonly string _taskId;
-    private  Guid UserId { get; set; }
+    private Guid UserId { get; set; }
 
     private RequestTask? TaskEdited { get; set; }
 
@@ -28,7 +28,7 @@ public partial class EditTask : ContentPage
     }
 
     protected override async void OnAppearing()
-    {     
+    {
 
         base.OnAppearing();
         HttpClientHandler handler = new()
@@ -56,12 +56,25 @@ public partial class EditTask : ContentPage
             ABStartTime.Date = result.Task.StartTime.ToDateTime(TimeOnly.MinValue);
             ABDeadline.Date = result.Task.Deadline.ToDateTime(TimeOnly.MinValue);
             UserId = result.Task.UserId;
-        }       
+        }
     }
 
-    private void TakePhoto(object sender, EventArgs e)
+    private async void TakePhoto(object sender, EventArgs e)
     {
-        Navigation.PushModalAsync(new CameraTask());
+        if (MediaPicker.Default.IsCaptureSupported)
+        {
+            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
+
+            if (photo != null)
+            {
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                using Stream sourceStream = await photo.OpenReadAsync(); 
+                using FileStream localFileStream = System.IO.File.OpenWrite(localFilePath);
+
+                await sourceStream.CopyToAsync(localFileStream);
+            }
+        }
     }
 
     private async void EditTask_Clicked(object sender, EventArgs e)
