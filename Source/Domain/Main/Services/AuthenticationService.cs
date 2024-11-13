@@ -11,12 +11,14 @@ namespace TaskListMaui.Source.Domain.Main.Services
 {
     public static class AuthenticationService
     {
+        public static string Token { get; set; } = string.Empty;
 
         public static async Task<Response> SaveToken(string token)
         {            
             try
             {
                 await SecureStorage.Default.SetAsync("token", token);
+                Token = token;
 
                 return new Response($"Token armazenado com sucesso.\n{token}", 200);
             }
@@ -28,7 +30,7 @@ namespace TaskListMaui.Source.Domain.Main.Services
 
         public static async Task<string> GetToken()
         {           
-            string token = await SecureStorage.Default.GetAsync("token") ?? string.Empty;         
+            string token = await SecureStorage.Default.GetAsync("token") ?? string.Empty;
             return token;           
         }
 
@@ -37,6 +39,7 @@ namespace TaskListMaui.Source.Domain.Main.Services
             try
             {
                 SecureStorage.Default.Remove("token");
+                Token = string.Empty;
                 return new Response("Token removido com sucesso.", 200);
             }
             catch (Exception ex)

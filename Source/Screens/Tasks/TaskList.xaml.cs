@@ -5,10 +5,10 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.Services;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
-using TaskListMaui.Source.Screens.Authorized;
 using TaskListMaui.Source.Screens.Home;
 using TaskListMaui.Source.Screens.User;
 
@@ -39,22 +39,22 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
         BindingContext = this;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        if (string.IsNullOrEmpty(await AuthenticationService.GetToken()))
+        if (string.IsNullOrEmpty(AuthenticationService.Token))
         {
-            await Navigation.PushModalAsync(new LoginPage());
+            Navigation.PopModalAsync();
             return;
         }
+        
         LoadTasks();
     }
 
     private async void LoadTasks()
     {
-        base.OnAppearing();
-
+       
         HttpClientHandler handler = new()
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
@@ -116,7 +116,7 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
     private async void Back_Clicked(object sender, EventArgs e)
     {
         AuthenticationService.RemoveToken();
-        await Navigation.PushModalAsync(new LoginPage());
+        await Navigation.PopModalAsync();
     }
 
     private async void ModalAddTask(object sender, EventArgs e)
@@ -149,7 +149,6 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             await DisplayAlert("Atenção", "Favor selecionar uma tarefa", "Fechar");
             return;
         }
-
         await Navigation.PushModalAsync(new EditTask(await AuthenticationService.GetToken(), _selectedTask.Id.ToString()));
 
     }

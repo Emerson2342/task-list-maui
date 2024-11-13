@@ -17,8 +17,14 @@ public partial class LoginPage : ContentPage
 
     public LoginPage()
     {
-        IsLogged();
+        
         InitializeComponent();
+        //IsLogged();
+        DisplayAlert("Token", $"{AuthenticationService.Token}", "Fechar");
+        if (!string.IsNullOrEmpty(AuthenticationService.Token))
+        {
+            Shell.Current.GoToAsync("taskList");
+        }
 
         Loading.IsVisible = false;
 
@@ -32,14 +38,13 @@ public partial class LoginPage : ContentPage
         LoginEmail.Text = "lyncoln_erc@hotmail.com";
         LoginPassword.Text = "123456";
     }
-
-    private async void IsLogged()
-    {        
-        if (!string.IsNullOrEmpty(await AuthenticationService.GetToken()))
-        {
-            await Navigation.PushModalAsync(new TaskList());
-        }
+    private void IsLogged()
+    {
+       
+        
     }
+
+
 
     private async void HandlerPassword(object sender, EventArgs e)
     {

@@ -18,19 +18,13 @@ public partial class EditTask : ContentPage
     private readonly string _taskId;
     private  Guid UserId { get; set; }
 
-    private RequestTask TaskToEdit { get; set; }
     private RequestTask? TaskEdited { get; set; }
-
-
-
 
     public EditTask(string token, string idTask)
     {
+        InitializeComponent();
         _token = token;
         _taskId = idTask;
-
-
-        InitializeComponent();
     }
 
     protected override async void OnAppearing()
@@ -62,8 +56,12 @@ public partial class EditTask : ContentPage
             ABStartTime.Date = result.Task.StartTime.ToDateTime(TimeOnly.MinValue);
             ABDeadline.Date = result.Task.Deadline.ToDateTime(TimeOnly.MinValue);
             UserId = result.Task.UserId;
-        }
-       
+        }       
+    }
+
+    private void TakePhoto(object sender, EventArgs e)
+    {
+        Navigation.PushModalAsync(new CameraTask());
     }
 
     private async void EditTask_Clicked(object sender, EventArgs e)
@@ -127,13 +125,9 @@ public partial class EditTask : ContentPage
         }
     }
 
-
-
     private async void Back_Clicked(object sender, EventArgs e)
     {
         await Navigation.PopModalAsync();
     }
-
-
 
 }
