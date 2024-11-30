@@ -77,8 +77,8 @@ public partial class EditTask : ContentPage
 
                 SKBitmap bitmap = SKBitmap.Decode(sourceStream);
 
-                int newWidth = 800;  
-                int newHeight = 600;
+                int newWidth = 300;
+                int newHeight = 500;
 
                 SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Low);
 
