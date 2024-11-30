@@ -87,8 +87,6 @@ public partial class EditTask : ContentPage
                     SKImage image = SKImage.FromBitmap(resizedBitmap);
                     SKData encoded = image.Encode(SKEncodedImageFormat.Jpeg, 60);
                     encoded.SaveTo(memoryStream);
-
-
                     
                     byte[] bytes = memoryStream.ToArray();
 
@@ -97,8 +95,6 @@ public partial class EditTask : ContentPage
                     PhotoTask = base64Image;
                     //await DisplayAlert("Imagem", base64Photo.Substring(0, 100) + "...", "Fechar");
                 }
-
-
             }
         }
     }

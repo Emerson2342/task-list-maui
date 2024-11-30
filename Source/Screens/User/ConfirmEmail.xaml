@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskListMaui.Source.Screens.User.ConfirmEmail"
+             Title="ConfirmEmail">
+    <StackLayout>
+        <Label 
+            Text="Email onfirmado. Pode acessar sua conta!!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            />
+        <Button
+            x:Name="ButtonHome"
+           
+            />
+        <Button
+            Text="Fechar"
+            Clicked="Button_Clicked"
+            />
+    </StackLayout>
+</ContentPage>
