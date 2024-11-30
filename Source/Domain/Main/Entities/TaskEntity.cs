@@ -15,6 +15,8 @@ namespace TaskListMaui.Source.Domain.Main.Entities
         public string Description { get; set; } = string.Empty;
         public DateOnly StartTime { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public DateOnly Deadline { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1));
+        public string PhotoTask { get; set; } = string.Empty;
+
 
     }
 }

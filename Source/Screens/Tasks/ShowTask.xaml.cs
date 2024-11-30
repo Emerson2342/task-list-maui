@@ -35,8 +35,8 @@ public partial class ShowTask : ContentPage
     {
         await Share.Default.RequestAsync(new ShareTextRequest
         {
-            Text = description,
-            Title = title
+            Title = "Compartilhar Tarefa",
+            Text = title + " " + description
         });
     }
 }

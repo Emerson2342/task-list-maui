@@ -48,6 +48,13 @@
                     BackgroundColor="#f5f5f5"
                     Format="dd-MM-yyyy"
                  />
+                <Image
+                    x:Name="ABDTaskPhoto" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Center"
+                    WidthRequest="200" 
+                    HeightRequest="150" />
+
                 <Button 
                     HorizontalOptions="Center"
                     VerticalOptions="Center"

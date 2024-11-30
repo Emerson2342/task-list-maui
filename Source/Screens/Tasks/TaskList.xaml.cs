@@ -37,6 +37,7 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
   
         InitializeComponent();
         BindingContext = this;
+       
     }
 
     protected override void OnAppearing()
@@ -49,7 +50,8 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             return;
         }
         
-        LoadTasks();
+        LoadTasks();       
+
     }
 
     private async void LoadTasks()

@@ -1,3 +1,4 @@
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http.Headers;
@@ -19,6 +20,7 @@ public partial class EditTask : ContentPage
     private Guid UserId { get; set; }
 
     private RequestTask? TaskEdited { get; set; }
+    private string PhotoTask = string.Empty;
 
     public EditTask(string token, string idTask)
     {
@@ -55,7 +57,10 @@ public partial class EditTask : ContentPage
             ABDescription.Text = result.Task.Description;
             ABStartTime.Date = result.Task.StartTime.ToDateTime(TimeOnly.MinValue);
             ABDeadline.Date = result.Task.Deadline.ToDateTime(TimeOnly.MinValue);
-            UserId = result.Task.UserId;
+            UserId = result.Task.UserId;               
+            ABDTaskPhoto.Source = ImageSource.FromStream(() =>
+                    new MemoryStream(Convert.FromBase64String(result.Task.PhotoTask)));
+
         }
     }
 
@@ -67,12 +72,33 @@ public partial class EditTask : ContentPage
 
             if (photo != null)
             {
-                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+               
+                using Stream sourceStream = await photo.OpenReadAsync();
 
-                using Stream sourceStream = await photo.OpenReadAsync(); 
-                using FileStream localFileStream = System.IO.File.OpenWrite(localFilePath);
+                SKBitmap bitmap = SKBitmap.Decode(sourceStream);
 
-                await sourceStream.CopyToAsync(localFileStream);
+                int newWidth = 800;  
+                int newHeight = 600;
+
+                SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Low);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    SKImage image = SKImage.FromBitmap(resizedBitmap);
+                    SKData encoded = image.Encode(SKEncodedImageFormat.Jpeg, 60);
+                    encoded.SaveTo(memoryStream);
+
+
+                    
+                    byte[] bytes = memoryStream.ToArray();
+
+                    string base64Image = Convert.ToBase64String(bytes);
+
+                    PhotoTask = base64Image;
+                    //await DisplayAlert("Imagem", base64Photo.Substring(0, 100) + "...", "Fechar");
+                }
+
+
             }
         }
     }
@@ -91,8 +117,12 @@ public partial class EditTask : ContentPage
                 Description = ABDescription.Text,
                 StartTime = DateOnly.FromDateTime(ABStartTime.Date),
                 Deadline = DateOnly.FromDateTime(ABDeadline.Date),
-                UserId = UserId
+                UserId = UserId,
+                PhotoTask = PhotoTask
             };
+
+            //await DisplayAlert("Imagem", TaskEdited.PhotoTask.Substring(0, 100) + "...", "Fechar");
+            //return;
 
 
             HttpClientHandler handler = new()

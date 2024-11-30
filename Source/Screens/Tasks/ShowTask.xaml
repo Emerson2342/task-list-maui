@@ -9,7 +9,7 @@
      HorizontalOptions="Center"
      Stroke="#830ad1"
      StrokeThickness="2"  
-           Margin="20"
+     Margin="20"
     >
         <StackLayout
         HorizontalOptions="Center"
@@ -17,8 +17,7 @@
         BackgroundColor="#fff"         
         Padding="20"
         Spacing="15"
-        >                           
-            
+        >
             <Label 
             x:Name="AbTitle"
             FontSize="20"
@@ -71,6 +70,7 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
                 Orientation="Horizontal"
+                Spacing="15"
             >
                 <Button
                 Clicked="Back_Clicked"
