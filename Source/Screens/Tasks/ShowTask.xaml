@@ -28,6 +28,16 @@
             x:Name="AbDescription"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+            <Border
+            StrokeShape="RoundRectangle 9"
+             VerticalOptions="Center"
+            Stroke="#830ad1"
+            StrokeThickness="2"
+            >
+                <Image
+                    x:Name="AbPhotoTask"                   
+                    />
+            </Border>
 
             <StackLayout
                 Orientation="Horizontal"
@@ -46,7 +56,7 @@
                   FontAttributes="Bold"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-            </StackLayout>
+            </StackLayout>                
 
                 <StackLayout
                 Orientation="Horizontal"

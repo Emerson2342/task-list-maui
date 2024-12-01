@@ -34,10 +34,10 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
 
     public TaskList()
     {
-  
+
         InitializeComponent();
         BindingContext = this;
-       
+
     }
 
     protected override void OnAppearing()
@@ -49,14 +49,14 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
             Navigation.PopModalAsync();
             return;
         }
-        
-        LoadTasks();       
+
+        LoadTasks();
 
     }
 
     private async void LoadTasks()
     {
-       
+
         HttpClientHandler handler = new()
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
@@ -76,13 +76,13 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
                 return;
             }
             TasksList = new ObservableCollection<TaskEntity>(result.TaskList);
-       //     await DisplayAlert("Teste",
-       //string.IsNullOrWhiteSpace(result.TaskList[0].PhotoTask)
-       //    ? "Foto está nula"
-       //    : result.TaskList[0].PhotoTask.Length >= 50
-       //        ? result.TaskList[0].PhotoTask.Substring(0, 50)
-       //        : result.TaskList[0].PhotoTask,
-       //"Fechar");
+            //     await DisplayAlert("Teste",
+            //string.IsNullOrWhiteSpace(result.TaskList[0].PhotoTask)
+            //    ? "Foto está nula"
+            //    : result.TaskList[0].PhotoTask.Length >= 50
+            //        ? result.TaskList[0].PhotoTask.Substring(0, 50)
+            //        : result.TaskList[0].PhotoTask,
+            //"Fechar");
 
 
 
@@ -116,7 +116,7 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
 
         if (!_isSwapping)
             ShowTask_Clicked(sender, e);
-          _isSwapping = false;
+        _isSwapping = false;
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)

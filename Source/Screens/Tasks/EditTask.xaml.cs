@@ -57,7 +57,7 @@ public partial class EditTask : ContentPage
             ABDescription.Text = result.Task.Description;
             ABStartTime.Date = result.Task.StartTime.ToDateTime(TimeOnly.MinValue);
             ABDeadline.Date = result.Task.Deadline.ToDateTime(TimeOnly.MinValue);
-            UserId = result.Task.UserId;               
+            UserId = result.Task.UserId;
             ABDTaskPhoto.Source = ImageSource.FromStream(() =>
                     new MemoryStream(Convert.FromBase64String(result.Task.PhotoTask)));
 
@@ -72,13 +72,13 @@ public partial class EditTask : ContentPage
 
             if (photo != null)
             {
-               
+
                 using Stream sourceStream = await photo.OpenReadAsync();
 
                 SKBitmap bitmap = SKBitmap.Decode(sourceStream);
 
-                int newWidth = 300;
-                int newHeight = 500;
+                int newWidth = 350;
+                int newHeight = 350;
 
                 SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Low);
 
@@ -87,7 +87,7 @@ public partial class EditTask : ContentPage
                     SKImage image = SKImage.FromBitmap(resizedBitmap);
                     SKData encoded = image.Encode(SKEncodedImageFormat.Jpeg, 60);
                     encoded.SaveTo(memoryStream);
-                    
+
                     byte[] bytes = memoryStream.ToArray();
 
                     string base64Image = Convert.ToBase64String(bytes);
@@ -99,9 +99,50 @@ public partial class EditTask : ContentPage
         }
     }
 
+    private async void PickFromGalery(object sender, EventArgs e)
+    {
+        try
+        {
+
+            FileResult? photo = await MediaPicker.Default.PickPhotoAsync();
+
+            if (photo != null)
+            {
+
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                using (Stream sourceStream = await photo.OpenReadAsync())
+                {
+                    
+                    using (FileStream localFileStream = System.IO.File.OpenWrite(localFilePath))
+                    {
+                        await sourceStream.CopyToAsync(localFileStream);
+                    }
+                }
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                   
+                    using (FileStream fileStream = System.IO.File.OpenRead(localFilePath))
+                    {
+                        fileStream.CopyTo(memoryStream);
+                    }
+                    string base64Image = Convert.ToBase64String(memoryStream.ToArray());
+
+                     PhotoTask = base64Image;
+                    ABDTaskPhoto.Source = ImageSource.FromStream(() =>
+                   new MemoryStream(Convert.FromBase64String(base64Image)));
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Erro ao pegar foto da galeria: {ex.Message}", "Fechar");
+        }
+    }
+
     private async void EditTask_Clicked(object sender, EventArgs e)
     {
-
         try
         {
             Loading.IsRunning = true;

@@ -8,7 +8,7 @@ public partial class ShowTask : ContentPage
 {
 	private readonly TaskEntity _selectedTask;
 
-    public ShowTask(TaskEntity selectedTask)
+	public ShowTask(TaskEntity selectedTask)
 	{
 		InitializeComponent();
 		_selectedTask = selectedTask;
@@ -17,9 +17,9 @@ public partial class ShowTask : ContentPage
 		AbDescription.Text = _selectedTask.Description;
 		AbStartTime.Text = _selectedTask.StartTime.ToShortDateString();
 		AbEndTime.Text = _selectedTask.Deadline.ToShortDateString();
-
-
-	}
+		AbPhotoTask.Source = ImageSource.FromStream(() =>
+                   new MemoryStream(Convert.FromBase64String(_selectedTask.PhotoTask)));
+    }
 
 	private async void Back_Clicked(object sender, EventArgs e)
 	{
@@ -30,14 +30,14 @@ public partial class ShowTask : ContentPage
 	{
 		await ShareText(_selectedTask.Title, _selectedTask.Description);
 
-    }
+	}
 
-    public static async Task ShareText(string title, string description)
-    {
-        await Share.Default.RequestAsync(new ShareTextRequest
-        {
-            Title = "Compartilhar Tarefa",
-            Text = title + " " + description
-        });
-    }
+	public static async Task ShareText(string title, string description)
+	{
+		await Share.Default.RequestAsync(new ShareTextRequest
+		{
+			Title = "Compartilhar Tarefa",
+			Text = title + " " + description
+		});
+	}
 }

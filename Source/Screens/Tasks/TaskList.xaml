@@ -8,8 +8,10 @@
              Shell.NavBarIsVisible="False">
     <StackLayout BackgroundColor="#000">
         <Grid RowDefinitions="50,650,50,80">
-            <StackLayout BackgroundColor="#000"
-                         Grid.Row="0">
+            <StackLayout
+                BackgroundColor="#000"
+                Grid.Row="0"
+                HorizontalOptions="Center">
                 <Label
                     Padding="15"
                     HorizontalOptions="Center"
