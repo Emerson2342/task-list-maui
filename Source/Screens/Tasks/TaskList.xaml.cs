@@ -76,6 +76,15 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
                 return;
             }
             TasksList = new ObservableCollection<TaskEntity>(result.TaskList);
+       //     await DisplayAlert("Teste",
+       //string.IsNullOrWhiteSpace(result.TaskList[0].PhotoTask)
+       //    ? "Foto está nula"
+       //    : result.TaskList[0].PhotoTask.Length >= 50
+       //        ? result.TaskList[0].PhotoTask.Substring(0, 50)
+       //        : result.TaskList[0].PhotoTask,
+       //"Fechar");
+
+
 
             if (result.TaskList == null)
                 await DisplayAlert("Erro", "Erro ao ler dos dados", "Fechar");

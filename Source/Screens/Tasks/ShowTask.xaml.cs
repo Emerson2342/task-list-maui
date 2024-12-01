@@ -18,6 +18,7 @@ public partial class ShowTask : ContentPage
 		AbStartTime.Text = _selectedTask.StartTime.ToShortDateString();
 		AbEndTime.Text = _selectedTask.Deadline.ToShortDateString();
 
+
 	}
 
 	private async void Back_Clicked(object sender, EventArgs e)
