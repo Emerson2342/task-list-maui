@@ -5,11 +5,10 @@
              BackgroundColor="#80000000">
     <Border
         StrokeShape="RoundRectangle 9"
-         VerticalOptions="Center"
+        VerticalOptions="Center"
         Stroke="#830ad1"
         StrokeThickness="2"
-        Margin="15"
-        >
+        Margin="15">
         <ScrollView
             HorizontalOptions="Center"
             VerticalOptions="Center"
@@ -19,84 +18,78 @@
                 Padding="15"
                 Spacing="3">
                 <ActivityIndicator
-                  x:Name="Loading"
-                  HorizontalOptions="Center"
-                 VerticalOptions="Center" />
+                    x:Name="Loading"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
 
-                <Label Text="Título" HorizontalOptions="Center"/>
+                <Label Text="Título"
+                       HorizontalOptions="Center"/>
                 <Entry
-                 x:Name="ABTitle"
+                    x:Name="ABTitle"
                     FontAttributes="Bold"
-                    BackgroundColor="#f5f5f5"
-                    />
-                <Label Text="Descrição" HorizontalOptions="Center" />
-                <Editor 
+                    BackgroundColor="#f5f5f5"/>
+                <Label Text="Descrição"
+                       HorizontalOptions="Center"/>
+                <Editor
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand"
                     x:Name="ABDescription"
-                    BackgroundColor="#f5f5f5"
-                 />
-                <Label Text="Início" HorizontalOptions="Center"/>
+                    BackgroundColor="#f5f5f5"/>
+                <Label Text="Início"
+                       HorizontalOptions="Center"/>
                 <DatePicker
-                 x:Name="ABStartTime"
+                    x:Name="ABStartTime"
                     BackgroundColor="#f5f5f5"
-                    Format="dd-MM-yyyy"
-                 />
-                <Label Text="Término" HorizontalOptions="Center"/>
-                <DatePicker 
+                    Format="dd-MM-yyyy"/>
+                <Label Text="Término"
+                       HorizontalOptions="Center"/>
+                <DatePicker
                     x:Name="ABDeadline"
                     BackgroundColor="#f5f5f5"
-                    Format="dd-MM-yyyy"
-                 />
+                    Format="dd-MM-yyyy"/>
                 <Border
-                StrokeShape="RoundRectangle 9"
-                 VerticalOptions="Center"
-                Stroke="#830ad1"
-                StrokeThickness="2"
-                >
-                <Image
-                    x:Name="ABDTaskPhoto" 
-                    HorizontalOptions="Center" 
-                    VerticalOptions="Center" />
+                    StrokeShape="RoundRectangle 9"
+                    VerticalOptions="Center"
+                    Stroke="#830ad1"
+                    StrokeThickness="2">
+                    <Image
+                        x:Name="ABDTaskPhoto"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
                 </Border>
 
-                <Button 
+                <Button
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Text="Tirar foto"
                     Clicked="TakePhoto"
-                    BackgroundColor="#000"
-                    />
-                <Button 
+                    BackgroundColor="#000"/>
+                <Button
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Text="Escolher da Galeria"
                     Clicked="PickFromGalery"
-                    BackgroundColor="#000"
-                    />
+                    BackgroundColor="#000"/>
 
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
                     Spacing="20"
-                    Padding="5"
-                    >
+                    Padding="5">
                     <Button
                         Clicked="Back_Clicked"
                         Text="Voltar"
                         HorizontalOptions="CenterAndExpand"
                         Padding="40,0"
                         FontAttributes="Bold"
-                        BackgroundColor="Black"
-                        />
+                        BackgroundColor="Black"/>
                     <Button
                         x:Name="btnEditTask"
                         Clicked="EditTask_Clicked"
                         Text="Editar"
                         Padding="40,0"
                         FontAttributes="Bold"
-                        HorizontalOptions="CenterAndExpand"
-                        />
+                        HorizontalOptions="CenterAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

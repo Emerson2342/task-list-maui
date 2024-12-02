@@ -4,97 +4,91 @@
              x:Class="TaskListMaui.Source.Screens.Tasks.ShowTask"
              BackgroundColor="#80000000">
     <Border
-     StrokeShape="RoundRectangle 9"
-     VerticalOptions="Center"
-     HorizontalOptions="Center"
-     Stroke="#830ad1"
-     StrokeThickness="2"  
-     Margin="20"
-    >
-        <StackLayout
-        HorizontalOptions="Center"
+        StrokeShape="RoundRectangle 9"
         VerticalOptions="Center"
-        BackgroundColor="#fff"         
-        Padding="20"
-        Spacing="15"
-        >
-            <Label 
-            x:Name="AbTitle"
-            FontSize="20"
+        HorizontalOptions="Center"
+        Stroke="#830ad1"
+        StrokeThickness="2"
+        Margin="20">
+        <StackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="#fff"
+            Padding="20"
+            Spacing="15">
+            <Label
+                x:Name="AbTitle"
+                FontSize="20"
                 FontAttributes="Bold"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            x:Name="AbDescription"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+            <Label
+                x:Name="AbDescription"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
             <Border
-            StrokeShape="RoundRectangle 9"
-             VerticalOptions="Center"
-            Stroke="#830ad1"
-            StrokeThickness="2"
-            >
+                StrokeShape="RoundRectangle 9"
+                VerticalOptions="Center"
+                Stroke="#830ad1"
+                StrokeThickness="2">
                 <Image
-                    x:Name="AbPhotoTask"                   
-                    />
+                    x:Name="AbPhotoTask"/>
             </Border>
 
             <StackLayout
                 Orientation="Horizontal"
                 HorizontalOptions="FillAndExpand">
-            <StackLayout
-                Orientation="Horizontal"
-                HorizontalOptions="FillAndExpand">
-                <Label 
-                 Text="Início: "
-                  TextColor="Green"
-                  FontAttributes="Bold"
-                 VerticalOptions="Center" 
-                 HorizontalOptions="Center" />
-                <Label
-                x:Name="AbStartTime"
-                  FontAttributes="Bold"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            </StackLayout>                
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand">
+                    <Label
+                        Text="Início: "
+                        TextColor="Green"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        x:Name="AbStartTime"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                </StackLayout>
 
                 <StackLayout
-                Orientation="Horizontal"
-                HorizontalOptions="FillAndExpand"
-                >
-                    <Label 
-                Text="Término: "
-                 TextColor="Red"
-                 FontAttributes="Bold"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-                    <Label 
-                  x:Name="AbEndTime"
-                  FontAttributes="Bold"
-                  VerticalOptions="Center" 
-                  HorizontalOptions="Center" />
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand">
+                    <Label
+                        Text="Término: "
+                        TextColor="Red"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                    <Label
+                        x:Name="AbEndTime"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
                 </StackLayout>
             </StackLayout>
 
             <StackLayout
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
                 Orientation="Horizontal"
-                Spacing="15"
-            >
+                Spacing="15">
                 <Button
-                Clicked="Back_Clicked"
-                Text="Fechar"
-                HorizontalOptions="CenterAndExpand"                
-                Padding="50,0"
-                FontAttributes="Bold"/>
+                    Clicked="Back_Clicked"
+                    Text="Fechar"
+                    HorizontalOptions="CenterAndExpand"
+                    Padding="50,0"
+                    FontAttributes="Bold"/>
 
                 <Button
-                Clicked="Share_Clicked"
-                Text="Compartilhar"
-                HorizontalOptions="CenterAndExpand"                
-                Padding="30,0"
-                FontAttributes="Bold"/>
+                    Clicked="Share_Clicked"
+                    Text="Compartilhar"
+                    HorizontalOptions="CenterAndExpand"
+                    Padding="30,0"
+                    FontAttributes="Bold"/>
             </StackLayout>
 
         </StackLayout>

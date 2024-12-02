@@ -33,132 +33,132 @@
             <ScrollView
                 Grid.Row="1"
                 BackgroundColor="#000">
-                    <CollectionView
-                        ItemsSource="{Binding TasksList}"
-                        SelectionMode="Single"
-                        SelectionChanged="SelectTask">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate
-                                x:DataType="model:TaskEntity">
-                                <SwipeView
-                                    SwipeStarted="StartSwipe"
-                                    SwipeEnded="EndSwipe"
-                                    HorizontalOptions="FillAndExpand">
-                                    <SwipeView.RightItems>
-                                        <SwipeItems>
-                                            <SwipeItemView
-                                                WidthRequest="50"
-                                                BackgroundColor="#000"
-                                                Invoked="Delete_Clicked">
-                                                <SwipeItemView.Content>
-                                                    <StackLayout
-                                                        HorizontalOptions="Center"
-                                                        VerticalOptions="Center">
-                                                        <Image
-                                                            Source="delete.png"
-                                                            WidthRequest="30"
-                                                            HeightRequest="30"
-                                                            VerticalOptions="Start"
-                                                            HorizontalOptions="Center"/>
-                                                        <Label
-                                                            FontAttributes="Bold"
-                                                            TextColor="#5f5f5f"
-                                                            Text="Excluir"
-                                                            HorizontalOptions="End"
-                                                            VerticalOptions="End"/>
-                                                    </StackLayout>
-                                                </SwipeItemView.Content>
-                                            </SwipeItemView>
-                                        </SwipeItems>
-                                    </SwipeView.RightItems>
-
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems>
-
-                                            <SwipeItemView
-                                                WidthRequest="50"
-                                                BackgroundColor="#000"
-                                                Invoked="Edit_Clicked">
-                                                <SwipeItemView.Content>
-                                                    <StackLayout
-                                                        HorizontalOptions="Center"
-                                                        VerticalOptions="Center">
-                                                        <Image
-                                                            Source="edit.png"
-                                                            WidthRequest="30"
-                                                            HeightRequest="30"
-                                                            VerticalOptions="Start"
-                                                            HorizontalOptions="Center"/>
-                                                        <Label
-                                                            FontAttributes="Bold"
-                                                            TextColor="#5f5f5f"
-                                                            Text="Editar"
-                                                            HorizontalOptions="End"
-                                                            VerticalOptions="End"/>
-                                                    </StackLayout>
-                                                </SwipeItemView.Content>
-                                            </SwipeItemView>
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
-
-                                    <Border
-                                        StrokeShape="RoundRectangle 9"
-                                        HorizontalOptions="FillAndExpand"
-                                        Stroke="#202020"
-                                        StrokeThickness="2"
-                                        Margin="5">
-                                        <StackLayout
-                                            Orientation="Horizontal"
-                                            BackgroundColor="#fff">
-                                            <StackLayout
-                                                HorizontalOptions="FillAndExpand"
-                                                Padding="15,0">
-                                                <StackLayout>
-                                                    <Label Padding="0,7"
-                                                           HorizontalOptions="Center"
-                                                           FontSize="17"
-                                                           FontAttributes="Bold"
-                                                           Text="{Binding Title}"/>
-                                                    <Label TextColor="#000"
-                                                           Text="{Binding Description}"/>
-
-                                                </StackLayout>
+                <CollectionView
+                    ItemsSource="{Binding TasksList}"
+                    SelectionMode="Single"
+                    SelectionChanged="SelectTask">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:TaskEntity">
+                            <SwipeView
+                                SwipeStarted="StartSwipe"
+                                SwipeEnded="EndSwipe"
+                                HorizontalOptions="FillAndExpand">
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItemView
+                                            WidthRequest="50"
+                                            BackgroundColor="#000"
+                                            Invoked="Delete_Clicked">
+                                            <SwipeItemView.Content>
                                                 <StackLayout
-                                                    Orientation="Horizontal"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    Padding="0,10">
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center">
+                                                    <Image
+                                                        Source="delete.png"
+                                                        WidthRequest="30"
+                                                        HeightRequest="30"
+                                                        VerticalOptions="Start"
+                                                        HorizontalOptions="Center"/>
                                                     <Label
-                                                        HorizontalOptions="CenterAndExpand">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span  Text="Início: "
-                                                                       FontAttributes="Bold"/>
-                                                                <Span FontAttributes="Bold"
-                                                                      TextColor="Green"
-                                                                      Text="{Binding StartTime}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                    <Label
-                                                        HorizontalOptions="CenterAndExpand">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="Término: "
-                                                                      FontAttributes="Bold"/>
-                                                                <Span FontAttributes="Bold"
-                                                                      TextColor="Red"
-                                                                      Text="{Binding Deadline}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
+                                                        FontAttributes="Bold"
+                                                        TextColor="#5f5f5f"
+                                                        Text="Excluir"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="End"/>
                                                 </StackLayout>
+                                            </SwipeItemView.Content>
+                                        </SwipeItemView>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+
+                                        <SwipeItemView
+                                            WidthRequest="50"
+                                            BackgroundColor="#000"
+                                            Invoked="Edit_Clicked">
+                                            <SwipeItemView.Content>
+                                                <StackLayout
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center">
+                                                    <Image
+                                                        Source="edit.png"
+                                                        WidthRequest="30"
+                                                        HeightRequest="30"
+                                                        VerticalOptions="Start"
+                                                        HorizontalOptions="Center"/>
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        TextColor="#5f5f5f"
+                                                        Text="Editar"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="End"/>
+                                                </StackLayout>
+                                            </SwipeItemView.Content>
+                                        </SwipeItemView>
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+
+                                <Border
+                                    StrokeShape="RoundRectangle 9"
+                                    HorizontalOptions="FillAndExpand"
+                                    Stroke="#202020"
+                                    StrokeThickness="2"
+                                    Margin="5">
+                                    <StackLayout
+                                        Orientation="Horizontal"
+                                        BackgroundColor="#fff">
+                                        <StackLayout
+                                            HorizontalOptions="FillAndExpand"
+                                            Padding="15,0">
+                                            <StackLayout>
+                                                <Label Padding="0,7"
+                                                       HorizontalOptions="Center"
+                                                       FontSize="17"
+                                                       FontAttributes="Bold"
+                                                       Text="{Binding Title}"/>
+                                                <Label TextColor="#000"
+                                                       Text="{Binding Description}"/>
+
+                                            </StackLayout>
+                                            <StackLayout
+                                                Orientation="Horizontal"
+                                                HorizontalOptions="FillAndExpand"
+                                                Padding="0,10">
+                                                <Label
+                                                    HorizontalOptions="CenterAndExpand">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span  Text="Início: "
+                                                                   FontAttributes="Bold"/>
+                                                            <Span FontAttributes="Bold"
+                                                                  TextColor="Green"
+                                                                  Text="{Binding StartTime}"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label
+                                                    HorizontalOptions="CenterAndExpand">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Término: "
+                                                                  FontAttributes="Bold"/>
+                                                            <Span FontAttributes="Bold"
+                                                                  TextColor="Red"
+                                                                  Text="{Binding Deadline}"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
                                             </StackLayout>
                                         </StackLayout>
-                                    </Border>
-                                </SwipeView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                    </StackLayout>
+                                </Border>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </ScrollView>
             <StackLayout
                 Grid.Row="2"
