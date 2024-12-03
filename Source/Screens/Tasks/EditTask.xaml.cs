@@ -1,4 +1,4 @@
-using SkiaSharp;
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http.Headers;
@@ -20,13 +20,19 @@ public partial class EditTask : ContentPage
     private Guid UserId { get; set; }
 
     private RequestTask? TaskEdited { get; set; }
-    private string PhotoTask = string.Empty;
+    private Stream? PhotoFile;
 
     public EditTask(string token, string idTask)
     {
         InitializeComponent();
+       
         _token = token;
         _taskId = idTask;
+
+        if (PhotoFile != null)
+        {
+            BorderPhoto.StrokeThickness = 2;
+        }
     }
 
     protected override async void OnAppearing()
@@ -72,32 +78,18 @@ public partial class EditTask : ContentPage
 
             if (photo != null)
             {
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                using Stream sourceStream = await photo.OpenReadAsync();
-
-                SKBitmap bitmap = SKBitmap.Decode(sourceStream);
-
-                int newWidth = 350;
-                int newHeight = 350;
-
-                SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Low);
-
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (Stream sourceStream = await photo.OpenReadAsync())
+                using (FileStream localFileStream = System.IO.File.OpenWrite(localFilePath))
                 {
-                    SKImage image = SKImage.FromBitmap(resizedBitmap);
-                    SKData encoded = image.Encode(SKEncodedImageFormat.Jpeg, 60);
-                    encoded.SaveTo(memoryStream);
-
-                    byte[] bytes = memoryStream.ToArray();
-
-                    string base64Image = Convert.ToBase64String(bytes);
-
-                    PhotoTask = base64Image;
-                    //await DisplayAlert("Imagem", base64Photo.Substring(0, 100) + "...", "Fechar");
+                    await sourceStream.CopyToAsync(localFileStream);
                 }
+
+                PhotoFile = new FileStream(localFilePath, FileMode.Open);
             }
         }
-    }
+    }  
 
     private async void PickFromGalery(object sender, EventArgs e)
     {
@@ -113,25 +105,13 @@ public partial class EditTask : ContentPage
 
                 using (Stream sourceStream = await photo.OpenReadAsync())
                 {
-                    
+
                     using (FileStream localFileStream = System.IO.File.OpenWrite(localFilePath))
                     {
                         await sourceStream.CopyToAsync(localFileStream);
                     }
                 }
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                   
-                    using (FileStream fileStream = System.IO.File.OpenRead(localFilePath))
-                    {
-                        fileStream.CopyTo(memoryStream);
-                    }
-                    string base64Image = Convert.ToBase64String(memoryStream.ToArray());
-
-                     PhotoTask = base64Image;
-                    ABDTaskPhoto.Source = ImageSource.FromStream(() =>
-                   new MemoryStream(Convert.FromBase64String(base64Image)));
-                }
+                PhotoFile = new FileStream(localFilePath, FileMode.Open);
 
             }
         }
@@ -147,6 +127,8 @@ public partial class EditTask : ContentPage
         {
             Loading.IsRunning = true;
             btnEditTask.IsEnabled = false;
+           
+
             TaskEdited = new()
             {
                 Id = Guid.Parse(_taskId),
@@ -155,8 +137,21 @@ public partial class EditTask : ContentPage
                 StartTime = DateOnly.FromDateTime(ABStartTime.Date),
                 Deadline = DateOnly.FromDateTime(ABDeadline.Date),
                 UserId = UserId,
-                PhotoTask = PhotoTask
             };
+
+            var formData = new MultipartFormDataContent
+            {
+               { new StringContent(TaskEdited.UserId.ToString()), "UserId" },
+               { new StringContent(TaskEdited.Id.ToString()), "id" },
+                { new StringContent(TaskEdited.Title), "Title" },
+                { new StringContent(TaskEdited.Description), "Description" },
+                { new StringContent(TaskEdited.StartTime.ToString("yyyy-MM-dd")), "StartTime" },
+                { new StringContent(TaskEdited.Deadline.ToString("yyyy-MM-dd")), "Deadline" }
+
+            };
+
+            if (PhotoFile != null)
+                formData.Add(new StreamContent(PhotoFile), "photoFile", "photo.jpg");
 
             //await DisplayAlert("Imagem", TaskEdited.PhotoTask.Substring(0, 100) + "...", "Fechar");
             //return;
@@ -172,9 +167,9 @@ public partial class EditTask : ContentPage
 
             var url = $"https://{Ip}/task/edit";
 
-            var request = await http.PostAsJsonAsync(url, TaskEdited);
+            var response = await http.PostAsync(url, formData);
 
-            var result = await request.Content.ReadFromJsonAsync<Response>();
+            var result = await response.Content.ReadFromJsonAsync<Response>();
 
             if (result == null)
             {

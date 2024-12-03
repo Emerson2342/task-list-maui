@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,11 @@ namespace TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs
         [JsonPropertyName("deadLine")]
         public DateOnly Deadline { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
 
-        [JsonPropertyName("photo_task")]
-        public string PhotoTask { get; set; } = string.Empty;
+        [JsonPropertyName("photoFile")]
+        public Stream? PhotoFile { get; set; }
+
+        [JsonPropertyName("photoTask")]
+        public string? PhotoTask { get; set; } = string.Empty;
 
         [JsonConstructor]
         public RequestTask()

@@ -48,6 +48,7 @@
                     BackgroundColor="#f5f5f5"
                     Format="dd-MM-yyyy"/>
                 <Border
+                    x:Name="BorderPhoto"
                     StrokeShape="RoundRectangle 9"
                     VerticalOptions="Center"
                     Stroke="#830ad1"

@@ -19,12 +19,6 @@ public partial class LoginPage : ContentPage
     {
         
         InitializeComponent();
-        //IsLogged();
-        DisplayAlert("Token", $"{AuthenticationService.Token}", "Fechar");
-        if (!string.IsNullOrEmpty(AuthenticationService.Token))
-        {
-            Shell.Current.GoToAsync("taskList");
-        }
 
         Loading.IsVisible = false;
 

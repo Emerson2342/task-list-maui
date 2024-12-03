@@ -68,6 +68,34 @@
                             <DatePicker
                                 x:Name="Deadline"
                                 Format="dd-MM-yyyy"/>
+                            <Border
+                                x:Name="BorderPhoto"
+                                StrokeShape="RoundRectangle 9"
+                                VerticalOptions="Center"
+                                Stroke="#830ad1"
+                                StrokeThickness="2">
+                            <Image
+                                 x:Name="ABDTaskPhoto"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"/>
+                            </Border>
+                            <Button
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Text="Tirar foto"
+                                Clicked="TakePhoto"
+                                BackgroundColor="#000"/>
+                            <Button
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Text="Escolher da Galeria"
+                                Clicked="PickFromGalery"
+                                BackgroundColor="#000"/>
+                            <Button
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Text="Remover Foto"
+                                BackgroundColor="#000"/>
                         </StackLayout>
                     </StackLayout>
                     <ActivityIndicator

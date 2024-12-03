@@ -10,10 +10,11 @@
         Stroke="#830ad1"
         StrokeThickness="2"
         Margin="20">
-        <StackLayout
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            BackgroundColor="#fff"
+        <ScrollView
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        BackgroundColor="#fff">
+            <StackLayout
             Padding="20"
             Spacing="15">
             <Label
@@ -90,7 +91,7 @@
                     Padding="30,0"
                     FontAttributes="Bold"/>
             </StackLayout>
-
         </StackLayout>
+        </ScrollView>
     </Border>
 </ContentPage>
