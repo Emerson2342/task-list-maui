@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Http;
+using SkiaSharp;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Reflection;
@@ -48,14 +49,30 @@ public partial class NewTask : ContentPage
             {
                 string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-
-                using (Stream sourceStream = await photo.OpenReadAsync())
-                using (FileStream localFileStream = File.OpenWrite(localFilePath))
+                await Task.Run(async () =>
                 {
-                    await sourceStream.CopyToAsync(localFileStream);
-                }
+                    using (Stream sourceStream = await photo.OpenReadAsync())
+                    {
+                        using (var image = SKImage.FromEncodedData(sourceStream))
+                        {
 
-                PhotoFile = new FileStream(localFilePath, FileMode.Open);
+                            using (var originalBitmap = SKBitmap.FromImage(image))
+                            {
+                                var resizedBitmap = originalBitmap.Resize(
+                                    new SKImageInfo(originalBitmap.Width / 5, originalBitmap.Height / 5),
+                                    SKFilterQuality.High);
+
+                                using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
+                                {
+                                    var data = resizedImage.Encode(SKEncodedImageFormat.Jpeg, 75);
+                                    File.WriteAllBytes(localFilePath, data.ToArray());
+                                }
+                            }
+                        }
+                    }
+                });
+                PhotoFile = new FileStream(localFilePath, FileMode.Open, FileAccess.Read);
+                ABDTaskPhoto.Source = ImageSource.FromStream(() => new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
             }
         }
     }

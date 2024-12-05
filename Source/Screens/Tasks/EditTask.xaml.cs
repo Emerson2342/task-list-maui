@@ -8,6 +8,12 @@ using TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs;
 using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
 using static System.Net.WebRequestMethods;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using Image = SixLabors.ImageSharp.Image;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SkiaSharp;
+using System.IO;
 
 namespace TaskListMaui.Source.Screens.Tasks;
 
@@ -25,14 +31,9 @@ public partial class EditTask : ContentPage
     public EditTask(string token, string idTask)
     {
         InitializeComponent();
-       
+
         _token = token;
         _taskId = idTask;
-
-        if (PhotoFile != null)
-        {
-            BorderPhoto.StrokeThickness = 2;
-        }
     }
 
     protected override async void OnAppearing()
@@ -64,9 +65,24 @@ public partial class EditTask : ContentPage
             ABStartTime.Date = result.Task.StartTime.ToDateTime(TimeOnly.MinValue);
             ABDeadline.Date = result.Task.Deadline.ToDateTime(TimeOnly.MinValue);
             UserId = result.Task.UserId;
-            ABDTaskPhoto.Source = ImageSource.FromStream(() =>
-                    new MemoryStream(Convert.FromBase64String(result.Task.PhotoTask)));
+        }
+        try
+        {
+            Loading.IsRunning = true;
+            var responseImage = await http.GetAsync($"https://{Configuration.IpAddress}/task/get-photo/{_taskId}");
+       
 
+            var image = await responseImage.Content.ReadAsByteArrayAsync();
+
+            var stream = new MemoryStream(image);
+            ABDTaskPhoto.Source = ImageSource.FromStream(() => stream);
+        }
+        catch (Exception ex) {
+            await DisplayAlert("Erro", $"Falha ao carregar imagem. {ex.Message} - {ex.InnerException}", "Fechar");
+        }
+        finally
+        {
+            Loading.IsRunning = false;
         }
     }
 
@@ -74,28 +90,60 @@ public partial class EditTask : ContentPage
     {
         if (MediaPicker.Default.IsCaptureSupported)
         {
-            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
-
-            if (photo != null)
+            try
             {
-                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                Loading.IsRunning = true; 
+            
+                FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
 
-                using (Stream sourceStream = await photo.OpenReadAsync())
-                using (FileStream localFileStream = System.IO.File.OpenWrite(localFilePath))
+                if (photo != null)
                 {
-                    await sourceStream.CopyToAsync(localFileStream);
-                }
+                    string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                PhotoFile = new FileStream(localFilePath, FileMode.Open);
+                    await Task.Run(async () =>
+                    {
+                        using (Stream sourceStream = await photo.OpenReadAsync())
+                        {
+                            using (var image = SKImage.FromEncodedData(sourceStream))
+                            {
+                                
+                                using (var originalBitmap = SKBitmap.FromImage(image))
+                                {
+                                    var resizedBitmap = originalBitmap.Resize(
+                                        new SKImageInfo(originalBitmap.Width /5, originalBitmap.Height /5),
+                                        SKFilterQuality.High);
+
+                                    using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
+                                    {
+                                        var data = resizedImage.Encode(SKEncodedImageFormat.Jpeg, 75);
+                                        System.IO.File.WriteAllBytes(localFilePath, data.ToArray());
+                                    }
+                                }
+                            }
+                        }
+                    });
+                
+                PhotoFile = new FileStream(localFilePath, FileMode.Open, FileAccess.Read);
+                ABDTaskPhoto.Source = ImageSource.FromStream(() => new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+                }
             }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Ocorreu um erro: {ex.Message}", "OK");
+            }
+            finally
+            {
+                Loading.IsRunning = false; 
+            }
+        
         }
-    }  
+    }
+
 
     private async void PickFromGalery(object sender, EventArgs e)
     {
         try
         {
-
             FileResult? photo = await MediaPicker.Default.PickPhotoAsync();
 
             if (photo != null)
@@ -112,7 +160,6 @@ public partial class EditTask : ContentPage
                     }
                 }
                 PhotoFile = new FileStream(localFilePath, FileMode.Open);
-
             }
         }
         catch (Exception ex)
@@ -126,8 +173,7 @@ public partial class EditTask : ContentPage
         try
         {
             Loading.IsRunning = true;
-            btnEditTask.IsEnabled = false;
-           
+            btnEditTask.IsEnabled = false;           
 
             TaskEdited = new()
             {
@@ -189,10 +235,8 @@ public partial class EditTask : ContentPage
         }
         catch (Exception ex)
         {
-
             await DisplayAlert("Erro", $"{ex.Message} - {ex.InnerException}", "Fechar");
-
-        }
+                    }
         finally
         {
             Loading.IsRunning = false;

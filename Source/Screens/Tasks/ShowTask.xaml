@@ -28,10 +28,10 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center"/>
             <Border
+                x:Name="BorderPhoto"
                 StrokeShape="RoundRectangle 9"
                 VerticalOptions="Center"
-                Stroke="#830ad1"
-                StrokeThickness="2">
+                StrokeThickness="0">
                 <Image
                     x:Name="AbPhotoTask"/>
             </Border>

@@ -17,11 +17,6 @@
                 Margin="0"
                 Padding="15"
                 Spacing="3">
-                <ActivityIndicator
-                    x:Name="Loading"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
-
                 <Label Text="Título"
                        HorizontalOptions="Center"/>
                 <Entry
@@ -32,7 +27,7 @@
                        HorizontalOptions="Center"/>
                 <Editor
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
                     x:Name="ABDescription"
                     BackgroundColor="#f5f5f5"/>
                 <Label Text="Início"
@@ -45,19 +40,23 @@
                        HorizontalOptions="Center"/>
                 <DatePicker
                     x:Name="ABDeadline"
-                    BackgroundColor="#f5f5f5"
+                    BackgroundColor="#FFF"
                     Format="dd-MM-yyyy"/>
                 <Border
                     x:Name="BorderPhoto"
                     StrokeShape="RoundRectangle 9"
                     VerticalOptions="Center"
-                    Stroke="#830ad1"
-                    StrokeThickness="2">
+                    StrokeThickness="0">
+                    
                     <Image
                         x:Name="ABDTaskPhoto"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"/>
                 </Border>
+                <ActivityIndicator
+                    x:Name="Loading"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
 
                 <Button
                     HorizontalOptions="Center"

@@ -143,6 +143,10 @@ public partial class TaskList : ContentPage, INotifyPropertyChanged
 
     private async void ShowTask_Clicked(object sender, EventArgs e)
     {
+        if (_selectedTask == null)
+           { await DisplayAlert("Erro", "Erro ao mostrar tarefa", "Fechar");
+            return;
+        }
         await Navigation.PushModalAsync(new ShowTask(_selectedTask));
     }
     private async void Edit_Clicked(object sender, EventArgs e)

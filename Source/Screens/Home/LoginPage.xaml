@@ -29,8 +29,7 @@
                 <ActivityIndicator
                 IsRunning="True"
                 HorizontalOptions="Center"
-                VerticalOptions="Center" 
-    />
+                VerticalOptions="Center"/>
             </StackLayout>
             
 

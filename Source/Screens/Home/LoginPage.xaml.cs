@@ -32,13 +32,6 @@ public partial class LoginPage : ContentPage
         LoginEmail.Text = "lyncoln_erc@hotmail.com";
         LoginPassword.Text = "123456";
     }
-    private void IsLogged()
-    {
-       
-        
-    }
-
-
 
     private async void HandlerPassword(object sender, EventArgs e)
     {
@@ -74,10 +67,8 @@ public partial class LoginPage : ContentPage
             }
             else
             {
-
                 await AuthenticationService.SaveToken(response.User.Token);
                 await Navigation.PushModalAsync(new TaskList());
-
             }
         }
         catch (Exception ex)
