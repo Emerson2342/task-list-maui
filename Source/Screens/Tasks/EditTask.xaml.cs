@@ -14,6 +14,10 @@ using Image = SixLabors.ImageSharp.Image;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SkiaSharp;
 using System.IO;
+using File = System.IO.File;
+using SixLabors.ImageSharp.Processing.Processors;
+using static TaskListMaui.Source.Domain.Main.Services.PhotoHelper;
+
 
 namespace TaskListMaui.Source.Screens.Tasks;
 
@@ -27,6 +31,7 @@ public partial class EditTask : ContentPage
 
     private RequestTask? TaskEdited { get; set; }
     private Stream? PhotoFile;
+    private SKEncodedOrigin encodedOrigin;
 
     public EditTask(string token, string idTask)
     {
@@ -38,7 +43,6 @@ public partial class EditTask : ContentPage
 
     protected override async void OnAppearing()
     {
-
         base.OnAppearing();
         HttpClientHandler handler = new()
         {
@@ -70,14 +74,15 @@ public partial class EditTask : ContentPage
         {
             Loading.IsRunning = true;
             var responseImage = await http.GetAsync($"https://{Configuration.IpAddress}/task/get-photo/{_taskId}");
-       
+
 
             var image = await responseImage.Content.ReadAsByteArrayAsync();
 
             var stream = new MemoryStream(image);
             ABDTaskPhoto.Source = ImageSource.FromStream(() => stream);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             await DisplayAlert("Erro", $"Falha ao carregar imagem. {ex.Message} - {ex.InnerException}", "Fechar");
         }
         finally
@@ -86,58 +91,62 @@ public partial class EditTask : ContentPage
         }
     }
 
-    private async void TakePhoto(object sender, EventArgs e)
+    public async void TakePhoto(object sender, EventArgs e)
     {
         if (MediaPicker.Default.IsCaptureSupported)
         {
-            try
+            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
+
+            if (photo != null)
             {
-                Loading.IsRunning = true; 
-            
-                FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                if (photo != null)
+                using (Stream sourceStream = await photo.OpenReadAsync())
+                using (FileStream localFileStream = File.OpenWrite(localFilePath))
                 {
-                    string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                    await sourceStream.CopyToAsync(localFileStream);
+                }
 
-                    await Task.Run(async () =>
+                using (Stream imageStream = File.OpenRead(localFilePath))
+                {
+
+                    SKEncodedOrigin origin;
+                    SKBitmap bitmap = LoadBitmapWithOrigin(imageStream, out origin);
+
+                    if (bitmap != null)
                     {
-                        using (Stream sourceStream = await photo.OpenReadAsync())
-                        {
-                            using (var image = SKImage.FromEncodedData(sourceStream))
-                            {
-                                
-                                using (var originalBitmap = SKBitmap.FromImage(image))
-                                {
-                                    var resizedBitmap = originalBitmap.Resize(
-                                        new SKImageInfo(originalBitmap.Width /5, originalBitmap.Height /5),
-                                        SKFilterQuality.High);
 
-                                    using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
-                                    {
-                                        var data = resizedImage.Encode(SKEncodedImageFormat.Jpeg, 75);
-                                        System.IO.File.WriteAllBytes(localFilePath, data.ToArray());
-                                    }
-                                }
+                        int newWidth = bitmap.Width / 5;
+                        int newHeight = bitmap.Height / 5;
+                        SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Medium);
+
+
+                        SKBitmap orientedBitmap = AutoOrient(resizedBitmap, origin);
+
+
+                        string newFilePath = Path.Combine(FileSystem.CacheDirectory, "resized_" + photo.FileName);
+                        using (var newFileStream = new FileStream(newFilePath, FileMode.Create, FileAccess.Write))
+                        {
+
+                            using (var image = SKImage.FromBitmap(orientedBitmap))
+                            using (var data = image.Encode())
+                            {
+                                data.SaveTo(newFileStream);
                             }
                         }
-                    });
-                
-                PhotoFile = new FileStream(localFilePath, FileMode.Open, FileAccess.Read);
-                ABDTaskPhoto.Source = ImageSource.FromStream(() => new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+                        PhotoFile = new FileStream(newFilePath, FileMode.Open, FileAccess.Read);
+                        ABDTaskPhoto.Source = ImageSource.FromFile(newFilePath);
+                    }
+
                 }
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Erro", $"Ocorreu um erro: {ex.Message}", "OK");
-            }
-            finally
-            {
-                Loading.IsRunning = false; 
-            }
-        
         }
     }
+
+
+
+
+
 
 
     private async void PickFromGalery(object sender, EventArgs e)
@@ -173,7 +182,7 @@ public partial class EditTask : ContentPage
         try
         {
             Loading.IsRunning = true;
-            btnEditTask.IsEnabled = false;           
+            btnEditTask.IsEnabled = false;
 
             TaskEdited = new()
             {
@@ -236,7 +245,7 @@ public partial class EditTask : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Erro", $"{ex.Message} - {ex.InnerException}", "Fechar");
-                    }
+        }
         finally
         {
             Loading.IsRunning = false;

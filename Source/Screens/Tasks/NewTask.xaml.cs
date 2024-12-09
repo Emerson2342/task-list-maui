@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
+using static TaskListMaui.Source.Domain.Main.Services.PhotoHelper;
 
 namespace TaskListMaui.Source.Screens.Tasks;
 
@@ -16,6 +17,7 @@ public partial class NewTask : ContentPage
     private readonly string _token;
 
     private Stream? PhotoFile;
+    private SKEncodedOrigin encodedOrigin;
 
 
     private readonly string Ip = Configuration.IpAddress;
@@ -27,11 +29,6 @@ public partial class NewTask : ContentPage
         InitializeComponent();
         TitleTask.Text = string.Empty;
         Description.Text = string.Empty;
-
-        if (PhotoFile == null)
-        {
-            BorderPhoto.Stroke = Colors.White;
-        }
     }
 
     private async void CloseModal(object sender, EventArgs e)
@@ -39,7 +36,7 @@ public partial class NewTask : ContentPage
         await Navigation.PopModalAsync();
     }
 
-    private async void TakePhoto(object sender, EventArgs e)
+    public async void TakePhoto(object sender, EventArgs e)
     {
         if (MediaPicker.Default.IsCaptureSupported)
         {
@@ -49,33 +46,45 @@ public partial class NewTask : ContentPage
             {
                 string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                await Task.Run(async () =>
+                using (Stream sourceStream = await photo.OpenReadAsync())
+                using (FileStream localFileStream = File.OpenWrite(localFilePath))
                 {
-                    using (Stream sourceStream = await photo.OpenReadAsync())
+                    await sourceStream.CopyToAsync(localFileStream);
+                }
+
+                using (Stream imageStream = File.OpenRead(localFilePath))
+                {
+
+                    SKEncodedOrigin origin;
+                    SKBitmap bitmap = LoadBitmapWithOrigin(imageStream, out origin);
+
+                    if (bitmap != null)
                     {
-                        using (var image = SKImage.FromEncodedData(sourceStream))
+
+                        int newWidth = bitmap.Width / 5;
+                        int newHeight = bitmap.Height / 5;
+                        SKBitmap resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKFilterQuality.Medium);
+                        
+                        SKBitmap orientedBitmap = AutoOrient(resizedBitmap, origin);
+
+                        string newFilePath = Path.Combine(FileSystem.CacheDirectory, "resized_" + photo.FileName);
+                        using (var newFileStream = new FileStream(newFilePath, FileMode.Create, FileAccess.Write))
                         {
 
-                            using (var originalBitmap = SKBitmap.FromImage(image))
+                            using (var image = SKImage.FromBitmap(orientedBitmap))
+                            using (var data = image.Encode())
                             {
-                                var resizedBitmap = originalBitmap.Resize(
-                                    new SKImageInfo(originalBitmap.Width / 5, originalBitmap.Height / 5),
-                                    SKFilterQuality.High);
-
-                                using (var resizedImage = SKImage.FromBitmap(resizedBitmap))
-                                {
-                                    var data = resizedImage.Encode(SKEncodedImageFormat.Jpeg, 75);
-                                    File.WriteAllBytes(localFilePath, data.ToArray());
-                                }
+                                data.SaveTo(newFileStream);
                             }
                         }
+                        PhotoFile = new FileStream(newFilePath, FileMode.Open, FileAccess.Read);
+                        ABDTaskPhoto.Source = ImageSource.FromFile(newFilePath);
                     }
-                });
-                PhotoFile = new FileStream(localFilePath, FileMode.Open, FileAccess.Read);
-                ABDTaskPhoto.Source = ImageSource.FromStream(() => new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+
+                }
             }
         }
-    }
+    }    
 
     private async void PickFromGalery(object sender, EventArgs e)
     {
