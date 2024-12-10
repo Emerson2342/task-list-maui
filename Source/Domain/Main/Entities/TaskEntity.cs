@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using TaskListMaui.Source.Domain.Shared.Entities;
+﻿using TaskListMaui.Source.Domain.Shared.Entities;
 
 namespace TaskListMaui.Source.Domain.Main.Entities
 {

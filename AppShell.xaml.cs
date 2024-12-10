@@ -1,8 +1,4 @@
-﻿using TaskListMaui.Source.Domain.Main.Services;
-using TaskListMaui.Source.Screens.Home;
-using TaskListMaui.Source.Screens.Tasks;
-
-namespace TaskListMaui;
+﻿namespace TaskListMaui;
 
 public partial class AppShell : Shell
 {

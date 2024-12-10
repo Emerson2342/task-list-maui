@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.Logging;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
 using TaskListMaui.Source.Domain.Main.Services;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;

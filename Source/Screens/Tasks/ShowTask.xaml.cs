@@ -1,11 +1,6 @@
-using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.Marshalling;
 using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.Services;
-using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
 
 namespace TaskListMaui.Source.Screens.Tasks;
 

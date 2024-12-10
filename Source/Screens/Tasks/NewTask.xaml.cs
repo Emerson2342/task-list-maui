@@ -1,10 +1,7 @@
 
-using Microsoft.AspNetCore.Http;
 using SkiaSharp;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
 using static TaskListMaui.Source.Domain.Main.Services.PhotoHelper;
@@ -17,7 +14,6 @@ public partial class NewTask : ContentPage
     private readonly string _token;
 
     private Stream? PhotoFile;
-    private SKEncodedOrigin encodedOrigin;
 
 
     private readonly string Ip = Configuration.IpAddress;

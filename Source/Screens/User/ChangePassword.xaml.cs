@@ -2,7 +2,6 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using TaskListMaui.Source.Domain.Main.DTOs.UserDTOs;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
-using static System.Net.WebRequestMethods;
 
 namespace TaskListMaui.Source.Screens.User;
 

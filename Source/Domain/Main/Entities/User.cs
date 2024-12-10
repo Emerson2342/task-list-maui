@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using TaskListMaui.Source.Domain.Main.ValueObjects;
+﻿using TaskListMaui.Source.Domain.Main.ValueObjects;
 using TaskListMaui.Source.Domain.Shared.Entities;
 using Email = TaskListMaui.Source.Domain.Main.ValueObjects.Email;
 

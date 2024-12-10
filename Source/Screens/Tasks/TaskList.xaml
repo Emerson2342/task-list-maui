@@ -7,7 +7,7 @@
              x:DataType="local:TaskList"
              Shell.NavBarIsVisible="False">
     <StackLayout BackgroundColor="#000">
-        <Grid RowDefinitions="50,650,50,80">
+        <Grid RowDefinitions="50,600,50,90">
             <StackLayout
                 BackgroundColor="#000"
                 Grid.Row="0"
@@ -178,7 +178,6 @@
             <StackLayout
                 BackgroundColor="#000"
                 Grid.Row="3">
-
                 <Border
                     StrokeShape="RoundRectangle 9"
                     HorizontalOptions="Center"
@@ -186,7 +185,7 @@
                     StrokeThickness="2"
                     Margin="1">
                     <Button
-                        Padding="50,0"
+                        Padding="30,0"
                         Text="Sair"
                         FontAttributes="Bold"
                         Clicked="Back_Clicked"/>

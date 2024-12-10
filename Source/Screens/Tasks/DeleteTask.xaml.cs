@@ -1,6 +1,4 @@
 using System.Net.Http.Headers;
-using static System.Net.WebRequestMethods;
-using System.Reflection;
 using TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs;
 using System.Net.Http.Json;
 

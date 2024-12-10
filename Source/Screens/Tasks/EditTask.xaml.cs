@@ -1,21 +1,9 @@
-
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Reflection;
 using TaskListMaui.Source.Domain.Main.DTOs.TaskDTOs;
-using TaskListMaui.Source.Domain.Main.Entities;
 using TaskListMaui.Source.Domain.Main.UseCase.ResponseCase;
-using static System.Net.WebRequestMethods;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using Image = SixLabors.ImageSharp.Image;
-using SixLabors.ImageSharp.Formats.Jpeg;
 using SkiaSharp;
-using System.IO;
 using File = System.IO.File;
-using SixLabors.ImageSharp.Processing.Processors;
 using static TaskListMaui.Source.Domain.Main.Services.PhotoHelper;
 
 
@@ -31,7 +19,6 @@ public partial class EditTask : ContentPage
 
     private RequestTask? TaskEdited { get; set; }
     private Stream? PhotoFile;
-    private SKEncodedOrigin encodedOrigin;
 
     public EditTask(string token, string idTask)
     {
@@ -142,12 +129,6 @@ public partial class EditTask : ContentPage
             }
         }
     }
-
-
-
-
-
-
 
     private async void PickFromGalery(object sender, EventArgs e)
     {
